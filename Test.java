@@ -1,10 +1,23 @@
-public abstract class Test{
-    protected String nom;
-    protected String pop_visee;
-    protected int groupe_visee;
+import java.io.*;
+import java.util.*;
 
-    public abstract void setPopVisee(String pop);
+public class Test
+{
 
-    public abstract void setGroupeVisee(int groupe);
+    public static void main( String[] argv)
+    {
+	ArrayList animaux= new ArrayList();
+	Souris souris = new Souris("M",2.5f,2);
+	animaux.add(souris);
+	Singe singe = new Singe("M",30f);
+	animaux.add(singe);
+	Souris souris2 = new Souris("F",1.5f,1);
+	animaux.add(souris2);
 
+	for (int i=0;i<animaux.size();i++)
+	    {
+		Animal animal=(Animal)animaux.get(i);
+		animal.afficher_infos();
+	    }
+    }
 }

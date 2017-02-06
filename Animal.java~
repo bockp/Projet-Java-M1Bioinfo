@@ -1,0 +1,60 @@
+abstract class Animal
+{
+    public int nb_animaux=0;
+    
+    protected final int id;
+    //protected final String espece;
+    protected final String sexe;
+    protected float poids_debut_semaine;
+    protected float poids;
+    protected String statut = "vivant"; // vivant ou mort
+    protected int progression = 0; // en pourcentage
+    protected String etat = "normal"; // normal, fatigue, ou stress
+    protected String meilleure_performance; //jour de la meilleur performance
+
+    public Animal(String sexe,float poids)
+    {
+	this.sexe = sexe;
+	this.poids = poids;
+	nb_animaux++;
+	this.id=nb_animaux;
+    }
+
+    public int getId() {return id;}
+    //public String getEspece() {return espece;}
+    public String getSexe() {return sexe;}
+    public float getPoids() {return poids;}
+    public String getStatut() {return statut;}
+    public int getProgression() {return progression;}
+    public String getEtat() {return etat;}
+    public String getMeilleurePerformance() {return meilleure_performance;}
+
+    public void setPoids(float poids)
+    {
+	this.poids=poids;
+    }
+    public void setPoidsDebutSemaine()
+    {
+	//if (Gestion.jour%5 == 4)
+	//this.poids_debut_semaine=poids;
+    }
+    public void setEtat()
+    {
+	if (this.poids < this.poids_debut_semaine)
+	    {
+		this.etat="stress";
+	    }
+	if (this.poids < 10*((this.poids*100)/this.poids_debut_semaine))
+	    {
+		this.etat="fatigue";
+	    }
+    }
+	
+    public void mort()
+    {
+	this.statut="mort";
+    }
+
+
+
+}

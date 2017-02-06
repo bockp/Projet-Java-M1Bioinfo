@@ -1,0 +1,4 @@
+public class Souris extends Animal
+{
+    private String espece = "Souris";
+    private int groupe;
