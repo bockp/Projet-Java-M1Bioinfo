@@ -2,6 +2,10 @@
 public class Labyrinthe extends Test {
     protected int temps;
 
+    Labyrinthe(){
+    nom = "Labyrinthe";   
+    }
+    
     public void setTemps(int t) {temps = t;}
     public void setPopVisee(String pop){pop_visee = pop;}
     public void setGroupeVisee(int group){groupe_visee = group;}
