@@ -3,8 +3,8 @@ public abstract class Test{
     protected String pop_visee;
     protected int groupe_visee;
 
-    public void setPopVisee(String pop){pop_visee = pop;}
+    public abstract void setPopVisee(String pop);
 
-    public void setGroupeVisee(int groupe){groupe_visee = groupe;}
+    public abstract void setGroupeVisee(int groupe);
 
 }
