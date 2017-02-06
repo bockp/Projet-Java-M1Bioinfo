@@ -2,7 +2,7 @@
 public class Labyrinthe extends Test {
     protected int temps;
 
-    Labyrinthe(){
+    public Labyrinthe(){
     nom = "Labyrinthe";   
     }
     
