@@ -1,7 +1,7 @@
 public class Nourriture extends Test {
     int nb_echecs;
 
-    Nourriture(){
+    public Nourriture(){
     nom = "Nourriture";
     }
     public void setNbEchecs(int nb){nb_echecs = nb;}
