@@ -1,7 +1,7 @@
 public abstract class Test{
-    private String nom;
-    private String pop_visee;
-    private int groupe_visee;
+    protected String nom;
+    protected String pop_visee;
+    protected int groupe_visee;
 
     public void setPopVisee(String pop){pop_visee = pop;}
 
