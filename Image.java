@@ -1,17 +1,21 @@
 public class Image extends Test {
-    int nb_echecs;
-    boolean reussite;
+    protected int nb_max=8;
+    protected int nb_echecs;
+    protected boolean reussite;
     
-    public Image(){
+    public Image(int nb){
     nom = "Image";
-    }
+    pop_visee = "singe";
+    nb_echecs = nb;
+    if (nb > nb_max)
+	reussite=true;
+    else
+	reussite=false;
+    } //l'utilisateur donne le nb d'echecs pour ce test
 
-    public void setReussite(boolean value){reussite = value;}
-    public void setNbEchecs(int nb){nb_echecs = nb;}
-
-    public void setPopVisee(String pop){pop_visee = pop;}
-    public void setGroupeVisee(int groupe){groupe_visee = groupe;}
-
+    public int getNbEchecs(){return nb_echecs;}
+    public boolean getReussite() {return reussite;}
+    public String getPopVisee(){return pop_visee;}
 
 
 }
