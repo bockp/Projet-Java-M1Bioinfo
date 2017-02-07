@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 abstract class Animal
 {
     public int nb_animaux=0;
@@ -74,4 +77,19 @@ abstract class Animal
 	System.out.println("Etat: "+etat);
 	System.out.println();
     }
+
+    public void sauvegarder() throws IOException
+    {
+	BufferedWriter buff = new BufferedWriter(new FileWriter("resultat.txt"));
+	buff.write("Espece: "+espece);
+	buff.write("Id: "+id);
+	buff.write("Sexe: "+sexe);
+	buff.write("Poids: "+poids);
+	buff.write("Statut: "+statut);
+	buff.write("Progression: "+progression);
+	buff.write("Etat: "+etat);
+	buff.write("Jour de la meilleure performance: "+meilleure_performance);
+	buff.newLine();
+    }
+	
 }
