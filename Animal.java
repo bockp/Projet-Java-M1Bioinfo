@@ -4,6 +4,7 @@ abstract class Animal
     
     protected final int id;
     protected final String sexe;
+    protected String espece;
     protected float poids_debut_semaine;
     protected float poids;
     protected String statut = "vivant"; // vivant ou mort
@@ -26,7 +27,7 @@ abstract class Animal
     public int getProgression() {return progression;}
     public String getEtat() {return etat;}
     public int getMeilleurePerformance() {return meilleure_performance;}
-
+    
     public void setPoids(float poids)
     {
 	this.poids=poids;
@@ -64,6 +65,7 @@ abstract class Animal
 
     public void afficher_infos()
     {
+	System.out.println("Espece: "+espece);
 	System.out.println("Id: "+id);
 	System.out.println("Sexe: "+sexe);
 	System.out.println("Poids: "+poids);

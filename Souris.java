@@ -1,19 +1,18 @@
 public class Souris extends Animal
 {
-    private final String espece = "Souris";
     private final int groupe;
     
     public Souris(String sexe, float poids, int groupe)
     {
 	super(sexe, poids);
 	this.groupe=groupe;
+	this.espece="souris";
     }
 
     public void afficher_infos()
     {
-	System.out.println("Espece: "+espece);
+    	super.afficher_infos();
 	System.out.println("Groupe: "+groupe);
-	super.afficher_infos();
     }
 }
     
