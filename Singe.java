@@ -5,6 +5,7 @@ public class Singe extends Animal
     public Singe(String sexe, float poids)
     {
 	super(sexe, poids);
+	this.pop=this.espece;
     }
 
     public void afficher_infos()

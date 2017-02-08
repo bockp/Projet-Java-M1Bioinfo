@@ -8,6 +8,7 @@ abstract class Animal
     protected final int id;
     protected final String sexe;
     protected String espece;
+    protected String pop;
     protected float poids_debut_semaine;
     protected float poids;
     protected String statut = "vivant"; // vivant ou mort
@@ -25,6 +26,8 @@ abstract class Animal
 
     public int getId() {return id;}
     public String getSexe() {return sexe;}
+    public String getEspece() {return espece;}
+    public String getPop() {return pop;}
     public float getPoids() {return poids;}
     public String getStatut() {return statut;}
     public int getProgression() {return progression;}
