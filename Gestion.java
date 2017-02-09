@@ -70,21 +70,38 @@ public class Gestion
 	{
 	    for (int i=0;i<animaux.size();i++)
 		{
-			Animal animal = (Animal)animaux.get(i);
-			System.out.println("Taper o si l'animal est mort");
-			String reponse = saisie_chaine();
+		        boolean x = true;
+			
+		        Animal animal = (Animal)animaux.get(i);
+		        System.out.println("Taper o si l'animal est mort");
+
+			while (x){
+			    String reponse = saisie_chaine();  // 
+			    if(!reponse.equals(null)){ //
+				x = false; //
+			    }
+			    else {
+				System.print.ln("\nErreur. veuillez retaper la reponse.\n");
+			    }
+			}
+			x = true;
+
 			if (!reponse.equals("o"))
 			    {
 			int resultat_courant = animal.getResultat();
 			int resultat = 0;
 			System.out.println("Donnez le poids de l'animal "+animal.getId()+" :");
-			boolean x = true;
+			
 			while (x){
 			    float poids = saisie_float();  // test si le poids a ete
-			    if(poids != 0){ // saisie correctement, sinon recommence le saisie.
-				x = false;
+			    if(poids > 0){ // saisie correctement, sinon recommence le saisie.
+				x = false; //
+			    }
+			    else {
+				System.out.println("Erreur, veuillez retaper le poids.");
 			    }
 			}
+			
 			animal.setPoids(poids);
 			ArrayList<String> tests = trouver_tests(animal, ht);
 			for (String test : tests)
