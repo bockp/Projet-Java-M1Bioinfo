@@ -14,6 +14,17 @@ public class Gestion
 	}
 	catch(IOException e) {return 0;}
     }
+
+    public static float saisie_float()
+    {	
+	try{
+	    BufferedReader buff = new BufferedReader (new InputStreamReader(System.in));
+	    String chaine=buff.readLine();
+	    float f = Float.parseFloat(chaine);
+	    return f;
+	}
+	catch(IOException e) {return 0;}
+    }
     
     /**
 	   Saisie d'une chaine de caracteres
@@ -39,33 +50,89 @@ public class Gestion
     especes.add("singe");
     especes.add("souris");
 //arraylist especes definie dans protocole (protocole.getEspeces())
-	saisie_animaux(especes);
+
+    Hashtable tests_dispos = new Hashtable();
+    tests_dispos.put("Souris 1", new ArrayList<String>(Arrays.asList("Labyrinthe")));
+    tests_dispos.put("Souris 2", new ArrayList<String>(Arrays.asList("Nourriture")));
+    tests_dispos.put("Singe", new ArrayList<String>(Arrays.asList("Image")));
+
+    saisie_animaux(animaux,especes);
+    System.out.println("ok");
+    saisie_resultats(animaux, tests_dispos);
 
     }
+	
+    public static void saisie_resultats(ArrayList animaux, Hashtable ht)
+	{
+	    for (int i=0;i<animaux.size();i++)
+		{
+			Animal animal = (Animal)animaux.get(i);
+			ArrayList<String> tests = trouver_tests(animal, ht);
+			for (String test : tests)
+			    {
+				switch (test)
+				    {
+				    case "Labyrinthe":
+					{
+					    Labyrinthe lab = new Labyrinthe();
+					    lab.saisie_utilisateur();
+					    break;
+					}
+				    case "Nourriture":
+					{
+					    Nourriture nour = new Nourriture();
+					    nour.saisie_utilisateur();
+					    break;
+					}
+				    case "Image":
+					{
+					    Image img = new Image();
+					    img.saisie_utilisateur();
+					    break;
+					}
+				    }
+			    }
+					
+		}
+	}
 
-    public static void saisie_animaux(ArrayList especes)
+    public static ArrayList<String> trouver_tests(Animal animal, Hashtable ht)
+    {
+	Enumeration pops = ht.keys();
+	ArrayList<String> tests = new ArrayList<String>();
+	while(pops.hasMoreElements())
+	    {
+		String pop = (String)pops.nextElement();
+		if (pop == animal.getPop())
+		    tests = (ArrayList<String>)ht.get(pop);
+	    }
+	return tests;
+    }
+		
+
+    public static void saisie_animaux(ArrayList animaux, ArrayList especes)
     {
 	
 	for (int i=0;i<especes.size();i++)
 	    {
-		System.out.println(i);
 		String espece = (String)especes.get(i);
-		saisie_animaux_type(espece);
+		saisie_animaux_type(animaux,espece);
 	    }
 		
     }
 
-    public static void saisie_animaux_type(String espece)
+    public static void saisie_animaux_type(ArrayList animaux, String espece)
     {
 	System.out.println("Nombre d'animaux de type "+espece+" a saisir ?");
 		int nb = saisie_num();
 		for (int i=0;i<nb;i++)
 		    {
 			System.out.println();
+
 			System.out.println("Sexe ?");
 			String sexe = saisie_chaine();
 			System.out.println("Poids ?");
-			int poids = saisie_num();
+			float poids = saisie_float();
 			switch (espece) // a modifier si ajout d'autres especes
 			    {
 			    case "souris": 
@@ -74,12 +141,14 @@ public class Gestion
 				    int groupe = saisie_num();
 				    System.out.println();
 				    Souris souris = new Souris(sexe, poids, groupe);
+				    animaux.add(souris);
 				    break;
 				}
 			    case "singe":
 				{
 				    System.out.println();
 				    Singe singe = new Singe(sexe, poids);
+				    animaux.add(singe);
 				    break;
 				}
 			    }

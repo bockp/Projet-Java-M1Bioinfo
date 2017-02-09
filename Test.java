@@ -7,5 +7,7 @@ public abstract class Test{
     public String getNom() {return nom;}
     public String getPopVisee() {return pop_visee;}
     public int getGroupe_vise() {return groupe_vise;}
+	
+    abstract void saisie_utilisateur();
 
 }

@@ -7,6 +7,10 @@ public class Souris extends Animal
 	super(sexe, poids);
 	this.groupe=groupe;
 	this.espece="souris";
+	if (groupe == 1)
+	    this.pop="Souris 1";
+	else if (groupe == 2)
+	    this.pop="Souris 2";
     }
 
     public void afficher_infos()
