@@ -67,27 +67,27 @@ public class Gestion
 	    
 	
     public static int saisie_resultats(ArrayList animaux, Hashtable ht, List<String> semaine, int jour)
-	{
-	    for (int i=0;i<animaux.size();i++)
-		{
-		        boolean x = true;
-			
-		        Animal animal = (Animal)animaux.get(i);
-		        System.out.println("Taper o si l'animal est mort");
-
-			while (x){
-			    String reponse = saisie_chaine();  // 
-			    if(!reponse.equals(null)){ //
-				x = false; //
-			    }
-			    else {
-				System.print.ln("\nErreur. veuillez retaper la reponse.\n");
-			    }
-			}
-			x = true;
-
-			if (!reponse.equals("o"))
-			    {
+    {
+	for (int i=0;i<animaux.size();i++)
+	    {
+		boolean x = true;
+		
+		Animal animal = (Animal)animaux.get(i);
+		System.out.println("Taper o si l'animal est mort");
+		
+		while (x){
+		    String reponse = saisie_chaine();  // 
+		    if(!reponse.equals(null)){ //
+			x = false; //
+		    }
+		    else {
+			System.print.ln("\nErreur. veuillez retaper la reponse.\n");
+		    }
+		}
+		x = true;
+		
+		if (!reponse.equals("o"))
+		    {
 			int resultat_courant = animal.getResultat();
 			int resultat = 0;
 			System.out.println("Donnez le poids de l'animal "+animal.getId()+" :");
@@ -137,15 +137,15 @@ public class Gestion
 			else
 			    animal.setProgression(resultat_courant);
 			System.out.println();
-			    }
-			//else
-			    //retirer animal de laliste
-	
-		}
-	    jour++;
-	    return jour;
-	}
-
+		    }
+		//else
+		//retirer animal de laliste
+		
+	    }
+	jour++;
+	return jour;
+    }
+    
     public static ArrayList<String> trouver_tests(Animal animal, Hashtable ht)
     {
 	Enumeration pops = ht.keys();
