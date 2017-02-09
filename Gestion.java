@@ -45,19 +45,13 @@ public class Gestion
 
     public static void main(String[] argv)
     {
+	Protocole protocole = new Protocole(); //possibilité de crééer plusieurs protocoles, si on rajoute des paramètres dans le constructeur
 	ArrayList animaux = new ArrayList();
-	ArrayList<String> especes = new ArrayList<String>();
-    especes.add("singe");
-    especes.add("souris");
-//arraylist especes definie dans protocole (protocole.getEspeces())
-
-    Hashtable tests_dispos = new Hashtable();
-    tests_dispos.put("Souris 1", new ArrayList<String>(Arrays.asList("Labyrinthe")));
-    tests_dispos.put("Souris 2", new ArrayList<String>(Arrays.asList("Nourriture")));
-    tests_dispos.put("Singe", new ArrayList<String>(Arrays.asList("Image")));
-
-    List<String> semaine = Arrays.asList("Lundi","Mardi","Mercredi","Jeudi","Vendredi");
-    int jour = 0;
+	int jour = 0;
+	
+	ArrayList<String> especes = protocole.getEspeces();
+	Hashtable tests_dispos = protocole.getTestsDispos();
+	List<String> semaine = protocole.getSemaine();
 
     saisie_animaux(animaux,especes);
 
@@ -65,6 +59,7 @@ public class Gestion
 	{
 	    System.out.println("Nouveau jour");
 	    saisie_resultats(animaux, tests_dispos, semaine, jour);
+	    //sauvegarde_resultats
 	}
     System.out.println("Fin de la semaine");
 
@@ -76,7 +71,7 @@ public class Gestion
 	    for (int i=0;i<animaux.size();i++)
 		{
 			Animal animal = (Animal)animaux.get(i);
-			System.out.println("Donnez le poids de l'animal:");
+			System.out.println("Donnez le poids de l'animal "+animal.getId()+" :");
 			float poids = saisie_float();
 			animal.setPoids(poids);
 			ArrayList<String> tests = trouver_tests(animal, ht);
@@ -106,6 +101,7 @@ public class Gestion
 			    }
 			if (semaine.get(jour) == semaine.get(0))
 			    animal.setPoidsDebutSemaine(poids);
+			System.out.println();
 	
 		}
 	    jour++;
