@@ -38,10 +38,9 @@ abstract class Animal
     {
 	this.poids=poids;
     }
-    public void setPoidsDebutSemaine()
+    public void setPoidsDebutSemaine(float poids)
     {
-	//if (Gestion.jour%5 == 4)
-	//this.poids_debut_semaine=poids;
+	this.poids_debut_semaine=poids;
     }
     public void setEtat()
     {
