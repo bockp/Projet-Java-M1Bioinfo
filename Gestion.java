@@ -78,7 +78,13 @@ public class Gestion
 			int resultat_courant = animal.getResultat();
 			int resultat = 0;
 			System.out.println("Donnez le poids de l'animal "+animal.getId()+" :");
-			float poids = saisie_float();
+			boolean x = true;
+			while (x){
+			    float poids = saisie_float();  // test si le poids a ete
+			    if(poids != 0){ // saisie correctement, sinon recommence le saisie.
+				x = false;
+			    }
+			}
 			animal.setPoids(poids);
 			ArrayList<String> tests = trouver_tests(animal, ht);
 			for (String test : tests)
