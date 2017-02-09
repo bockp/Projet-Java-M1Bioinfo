@@ -71,6 +71,12 @@ public class Gestion
 	    for (int i=0;i<animaux.size();i++)
 		{
 			Animal animal = (Animal)animaux.get(i);
+			System.out.println("Taper o si l'animal est mort");
+			String reponse = saisie_chaine();
+			if (!reponse.equals("o"))
+			    {
+			int resultat_courant = animal.getResultat();
+			int resultat = 0;
 			System.out.println("Donnez le poids de l'animal "+animal.getId()+" :");
 			float poids = saisie_float();
 			animal.setPoids(poids);
@@ -83,25 +89,34 @@ public class Gestion
 					{
 					    Labyrinthe lab = new Labyrinthe();
 					    lab.saisie_utilisateur();
+					    resultat=lab.getTemps();
 					    break;
 					}
 				    case "Nourriture":
 					{
 					    Nourriture nour = new Nourriture();
 					    nour.saisie_utilisateur();
+					    resultat=nour.getNbEchecs();
 					    break;
 					}
 				    case "Image":
 					{
 					    Image img = new Image();
 					    img.saisie_utilisateur();
+					    resultat=img.getNbEchecs();
 					    break;
 					}
 				    }
 			    }
+			animal.setResultat(resultat);
 			if (semaine.get(jour) == semaine.get(0))
 			    animal.setPoidsDebutSemaine(poids);
+			else
+			    animal.setProgression(resultat_courant);
 			System.out.println();
+			    }
+			//else
+			    //retirer animal de laliste
 	
 		}
 	    jour++;
