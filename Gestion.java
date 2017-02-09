@@ -56,17 +56,29 @@ public class Gestion
     tests_dispos.put("Souris 2", new ArrayList<String>(Arrays.asList("Nourriture")));
     tests_dispos.put("Singe", new ArrayList<String>(Arrays.asList("Image")));
 
+    List<String> semaine = Arrays.asList("Lundi","Mardi","Mercredi","Jeudi","Vendredi");
+    int jour = 0;
+
     saisie_animaux(animaux,especes);
-    System.out.println("ok");
-    saisie_resultats(animaux, tests_dispos);
+
+    for(Iterator<String> e = semaine.iterator();e.hasNext();)
+	{
+	    System.out.println("Nouveau jour");
+	    saisie_resultats(animaux, tests_dispos, semaine, jour);
+	}
+    System.out.println("Fin de la semaine");
 
     }
+	    
 	
-    public static void saisie_resultats(ArrayList animaux, Hashtable ht)
+    public static int saisie_resultats(ArrayList animaux, Hashtable ht, List<String> semaine, int jour)
 	{
 	    for (int i=0;i<animaux.size();i++)
 		{
 			Animal animal = (Animal)animaux.get(i);
+			System.out.println("Donnez le poids de l'animal:");
+			float poids = saisie_float();
+			animal.setPoids(poids);
 			ArrayList<String> tests = trouver_tests(animal, ht);
 			for (String test : tests)
 			    {
@@ -92,8 +104,12 @@ public class Gestion
 					}
 				    }
 			    }
-					
+			if (semaine.get(jour) == semaine.get(0))
+			    animal.setPoidsDebutSemaine(poids);
+	
 		}
+	    jour++;
+	    return jour;
 	}
 
     public static ArrayList<String> trouver_tests(Animal animal, Hashtable ht)
