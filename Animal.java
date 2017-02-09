@@ -12,6 +12,7 @@ abstract class Animal
     protected float poids_debut_semaine;
     protected float poids;
     protected String statut = "vivant"; // vivant ou mort
+    protected int resultat;
     protected int progression = 0; // en pourcentage
     protected String etat = "normal"; // normal, fatigue, ou stress
     protected int meilleure_performance; //jour de la meilleur performance
@@ -30,6 +31,7 @@ abstract class Animal
     public String getPop() {return pop;}
     public float getPoids() {return poids;}
     public String getStatut() {return statut;}
+    public int getResultat() {return resultat;}
     public int getProgression() {return progression;}
     public String getEtat() {return etat;}
     public int getMeilleurePerformance() {return meilleure_performance;}
@@ -53,9 +55,14 @@ abstract class Animal
 		this.etat="fatigue";
 	    }
     }
+    public void setResultat(int nombre)
+    {
+	this.resultat=nombre;
+    }
+
     public void setProgression(int nombre)
     {
-	this.progression=nombre;
+	this.progression=(int)(((resultat-nombre)/nombre)*100);
     }
 	
     public void mort()
