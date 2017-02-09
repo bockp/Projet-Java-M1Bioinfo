@@ -12,7 +12,8 @@ public class Gestion
 	    int num = Integer.parseInt(chaine);
 	    return num;
 	}
-	catch(IOException e) {return 0;}
+	catch(IOException e) {return -1;}
+	catch(NumberFormatException a) {return -1;}
     }
 
     public static float saisie_float()
@@ -23,7 +24,8 @@ public class Gestion
 	    float f = Float.parseFloat(chaine);
 	    return f;
 	}
-	catch(IOException e) {return 0;}
+	catch(IOException e) {return -1;}
+	catch(NumberFormatException a) {return -1;}
     }
     
     /**
@@ -38,7 +40,8 @@ public class Gestion
 	    String chaine=buff.readLine();
 	    return chaine;
 	}
-	catch(IOException e) {System.out.println(" impossible"+e);
+	catch(IOException e) {
+	    System.out.println(" impossible"+e);
 	    return null;
 	}
     }
@@ -53,16 +56,18 @@ public class Gestion
 	Hashtable tests_dispos = protocole.getTestsDispos();
 	List<String> semaine = protocole.getSemaine();
 
-    saisie_animaux(animaux,especes);
+	saisie_animaux(animaux,especes);
 
-    for(Iterator<String> e = semaine.iterator();e.hasNext();)
-	{
-	    System.out.println("Nouveau jour");
-	    saisie_resultats(animaux, tests_dispos, semaine, jour);
-	    //sauvegarde_resultats
-	}
-    System.out.println("Fin de la semaine");
-
+	for(Iterator<String> e = semaine.iterator();e.hasNext();)
+	    {
+		String nomJour = e.next();
+		System.out.println(nomJour);
+		
+		jour = saisie_resultats(animaux, tests_dispos, semaine, jour);
+		//sauvegarde_resultats
+	    }
+	System.out.println("Fin de la semaine");
+	
     }
 	    
 	
@@ -73,27 +78,27 @@ public class Gestion
 		boolean x = true;
 		
 		Animal animal = (Animal)animaux.get(i);
-		System.out.println("Taper o si l'animal est mort");
-		
+		System.out.println("Taper x si l'animal est mort");
+		String reponse = "\\^^//";
 		while (x){
-		    String reponse = saisie_chaine();  // 
-		    if(!reponse.equals(null)){ //
+		    reponse = saisie_chaine();  // 
+		    if(!( reponse == null)){ //
 			x = false; //
 		    }
 		    else {
-			System.print.ln("\nErreur. veuillez retaper la reponse.\n");
+			System.out.println("\nErreur. veuillez retaper la reponse.\n");
 		    }
 		}
 		x = true;
 		
-		if (!reponse.equals("o"))
+		if (!(reponse.equals("x")))
 		    {
 			int resultat_courant = animal.getResultat();
 			int resultat = 0;
 			System.out.println("Donnez le poids de l'animal "+animal.getId()+" :");
-			
+			float poids = -1;
 			while (x){
-			    float poids = saisie_float();  // test si le poids a ete
+			    poids = saisie_float();  // test si le poids a ete
 			    if(poids > 0){ // saisie correctement, sinon recommence le saisie.
 				x = false; //
 			    }
@@ -101,9 +106,11 @@ public class Gestion
 				System.out.println("Erreur, veuillez retaper le poids.");
 			    }
 			}
+			x = true;
 			
 			animal.setPoids(poids);
 			ArrayList<String> tests = trouver_tests(animal, ht);
+			// partie a modifier si changement de protocol.
 			for (String test : tests)
 			    {
 				switch (test)
@@ -129,7 +136,14 @@ public class Gestion
 					    resultat=img.getNbEchecs();
 					    break;
 					}
+				    //case "nvx test":
+					//{
+					    //nvx_test tst = new nvx_test();
+					    //...
+					    //break;
+					//}
 				    }
+				
 			    }
 			animal.setResultat(resultat);
 			if (semaine.get(jour) == semaine.get(0))
@@ -137,6 +151,7 @@ public class Gestion
 			else
 			    animal.setProgression(resultat_courant);
 			System.out.println();
+			animal.sauvegarder(semaine.get(jour) + ".txt");
 		    }
 		//else
 		//retirer animal de laliste
@@ -173,36 +188,84 @@ public class Gestion
 
     public static void saisie_animaux_type(ArrayList animaux, String espece)
     {
+	boolean x = true;
+	
 	System.out.println("Nombre d'animaux de type "+espece+" a saisir ?");
-		int nb = saisie_num();
-		for (int i=0;i<nb;i++)
-		    {
-			System.out.println();
+	int nb = -1;
+	while(x){
+	    nb = saisie_num();
+	    if(nb > 0){
+		x = false;
+	    } else {
+		System.out.println("\nErreur, veuillez saisir a nouveau le nombre d'animaux:\n");
+	    }
+	}
+	
+	for (int i=0;i<nb;i++)
+	    {
+		x = true;
+		System.out.println();
+		String sexe = "\\o//";
+		System.out.println("Sexe(M/F) ?");
+		while (x){
+		    sexe = saisie_chaine();
+		    if((sexe.equals("M") || sexe.equals("F"))) { // saisie correcte, sinon recommence le saisie.
+			x = false;
+		    }
+		    else {
+			System.out.println("Erreur, veuillez retaper le sexe de l'animal.");
+		    }
+		}
+		x = true;
 
-			System.out.println("Sexe ?");
-			String sexe = saisie_chaine();
-			System.out.println("Poids ?");
-			float poids = saisie_float();
-			switch (espece) // a modifier si ajout d'autres especes
-			    {
-			    case "souris": 
-				{
-				    System.out.println("Groupe ?");
-				    int groupe = saisie_num();
-				    System.out.println();
-				    Souris souris = new Souris(sexe, poids, groupe);
-				    animaux.add(souris);
-				    break;
+
+		System.out.println("Poids ?");
+		float poids = -1;
+		while (x){
+		    poids = saisie_float();  // test si le poids a ete
+		    if(poids > 0){ // saisie correctement, sinon recommence le saisie.
+			x = false; //
+		    }
+		    else {
+			System.out.println("Erreur, veuillez retaper le poids.");
+		    }
+		}
+		
+		
+		switch (espece) // liste espece a modifier si ajout de nouveaux especes
+		    {
+		    case "souris": 
+			{
+			    x = true;
+			    System.out.println("Groupe ?");
+			    int groupe = -1;
+			    while (x){
+				groupe = saisie_num();
+				if(groupe > 0){ // saisie correctement, sinon recommence le saisie.
+				    x = false; //
 				}
-			    case "singe":
-				{
-				    System.out.println();
-				    Singe singe = new Singe(sexe, poids);
-				    animaux.add(singe);
-				    break;
+				else {
+				    System.out.println("Erreur, veuillez retaper le numero de groupe.");
 				}
 			    }
+			    
+			    
+			    System.out.println();
+			    Souris souris = new Souris(sexe, poids, groupe);
+			    animaux.add(souris);
+			    souris.sauvegarder("Animals.txt");
+			    break;
+			}
+		    case "singe":
+			{
+			    System.out.println();
+			    Singe singe = new Singe(sexe, poids);
+			    animaux.add(singe);
+			    singe.sauvegarder("Animals.txt");
+			    break;
+			}
 		    }
+	    }
     }
 	
     

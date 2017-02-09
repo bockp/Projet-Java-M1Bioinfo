@@ -3,9 +3,9 @@ import java.util.*;
 
 abstract class Animal
 {
-    public int nb_animaux=0;
+    public static int nb_animaux=0;
     
-    protected final int id;
+    protected int id;
     protected final String sexe;
     protected String espece;
     protected String pop;
@@ -21,7 +21,7 @@ abstract class Animal
     {
 	this.sexe = sexe;
 	this.poids = poids;
-	nb_animaux++;
+	this.nb_animaux++;
 	this.id=nb_animaux;
     }
 
@@ -87,18 +87,21 @@ abstract class Animal
 	System.out.println();
     }
 
-    public void sauvegarder() throws IOException
+    public void sauvegarder(String filename)
     {
-	BufferedWriter buff = new BufferedWriter(new FileWriter("resultat.txt"));
-	buff.write("Espece: "+espece);
-	buff.write("Id: "+id);
-	buff.write("Sexe: "+sexe);
-	buff.write("Poids: "+poids);
-	buff.write("Statut: "+statut);
-	buff.write("Progression: "+progression);
-	buff.write("Etat: "+etat);
-	buff.write("Jour de la meilleure performance: "+meilleure_performance);
-	buff.newLine();
+	try{
+	    BufferedWriter buff = new BufferedWriter(new FileWriter(filename, true));
+	    buff.write("Id: "+ id + "\n");
+	    buff.write("Espece: "+ espece + "\n");
+	    buff.write("Sexe: "+ sexe + "\n");
+	    buff.write("Poids: "+ poids + "\n");
+	    buff.write("Statut: "+ statut + "\n");
+	    buff.write("Progression: "+ progression + "\n");
+	    buff.write("Etat: "+ etat + "\n");
+	    buff.write("Jour de la meilleure performance: "+ meilleure_performance + "\n");
+	    buff.newLine();
+	    buff.close();
+	}
+	catch(IOException e) {System.out.println("Erreur de sauvegarde: "+ e);}
     }
-	
 }

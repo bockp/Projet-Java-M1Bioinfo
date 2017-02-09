@@ -13,4 +13,6 @@ public class Singe extends Animal
 	System.out.println("Espece: "+espece);
 	super.afficher_infos();
     }
+
+    public void sauvegarder(String filename){super.sauvegarder(filename);}
 }

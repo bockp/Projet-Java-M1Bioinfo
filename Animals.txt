@@ -1,0 +1,36 @@
+Id: 1
+Espece: null
+Sexe: M
+Poids: 1.0
+Statut: vivant
+Progression: 0
+Etat: normal
+Jour de la meilleure performance: 0
+
+Id: 2
+Espece: souris
+Sexe: M
+Poids: 1.0
+Statut: vivant
+Progression: 0
+Etat: normal
+Jour de la meilleure performance: 0
+
+Id: 1
+Espece: null
+Sexe: M
+Poids: 21.0
+Statut: vivant
+Progression: 0
+Etat: normal
+Jour de la meilleure performance: 0
+
+Id: 2
+Espece: souris
+Sexe: M
+Poids: 1.0
+Statut: vivant
+Progression: 0
+Etat: normal
+Jour de la meilleure performance: 0
+
