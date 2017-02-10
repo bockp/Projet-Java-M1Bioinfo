@@ -34,3 +34,30 @@ Progression: 0
 Etat: normal
 Jour de la meilleure performance: 0
 
+Id: 1
+Espece: Singe
+Sexe: M
+Poids: 45.0
+Statut: vivant
+Progression: 0
+Etat: normal
+Jour de la meilleure performance: 0
+
+Id: 2
+Espece: Singe
+Sexe: F
+Poids: 12.0
+Statut: vivant
+Progression: 0
+Etat: normal
+Jour de la meilleure performance: 0
+
+Id: 3
+Espece: souris
+Sexe: M
+Poids: 4.0
+Statut: vivant
+Progression: 0
+Etat: normal
+Jour de la meilleure performance: 0
+
