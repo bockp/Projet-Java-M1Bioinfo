@@ -24,15 +24,15 @@ public class Souris extends Animal
     {
 	try{
 	    BufferedWriter buff = new BufferedWriter(new FileWriter(filename, true));
-	    buff.write("Id: "+ id + "\n");
-	    buff.write("Espece: "+ espece + "\n");
-	    buff.write("groupe: "+ groupe + "\n");
-	    buff.write("Sexe: "+ sexe + "\n");
-	    buff.write("Poids: "+ poids + "\n");
-	    buff.write("Statut: "+ statut + "\n");
-	    buff.write("Progression: "+ progression + "\n");
-	    buff.write("Etat: "+ etat + "\n");
-	    buff.write("Jour de la meilleure performance: "+ meilleure_performance + "\n");
+	    buff.write("Id:"+ id + " ");
+	    buff.write("Espece:"+ espece + " ");
+	    buff.write("groupe:"+ groupe + " ");
+	    buff.write("Sexe:"+ sexe + " ");
+	    buff.write("Poids:"+ poids + " ");
+	    buff.write("Statut:"+ statut + " ");
+	    buff.write("Progression:"+ progression + " ");
+	    buff.write("Etat:"+ etat + " ");
+	    buff.write("Jour de la meilleure performance:"+ meilleure_performance + " ");
 	    buff.newLine();
 	    buff.close();
 	}

@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+
+//verifier calcul du stress, vider les fichiers avant execution du programme, recuperer donnees, afficher apprentissage de chaque animal, afficher jour meilleur perf, afficher meilleur apprentissage (tous, et singe/souris), afficher si perfs associees au stress
 public class Gestion
 {
 
@@ -56,29 +58,70 @@ public class Gestion
 	Hashtable tests_dispos = protocole.getTestsDispos();
 	List<String> semaine = protocole.getSemaine();
 
-	saisie_animaux(animaux,especes);
+        while(true)
+            {
+                int choix = menu();
+                switch (choix)
+                    {
+                    case 0 :
+                        {
+                            System.out.println("Au revoir\n");
+                            break;
+                        }
+                    case 1 :
+                        {
+                            saisie_animaux(animaux,especes);
+                            break;
+                        }
+                    case 2 :
+                        {
+                            if (! animaux.isEmpty())
+                                saisie_resultats_semaine(animaux, tests_dispos, semaine, jour);
+                            else
+                                System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
+                            break;
+                        }
+                    case 3 :
+                        {
+                            if (! animaux.isEmpty())
+                                afficher_animaux(animaux);
+                            else
+                                System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
+                            break;
+                        }
+                    }
+            }
+    }
 
-	for(Iterator<String> e = semaine.iterator();e.hasNext();)
+    public static void saisie_resultats_semaine(ArrayList animaux, Hashtable tests_dispos, List<String> semaine, int jour)
+    {
+        for(Iterator<String> e = semaine.iterator();e.hasNext();)
 	    {
 		String nomJour = e.next();
 		System.out.println(nomJour);
-		
+		if (animaux.size() == 0)
+                    {
+                        System.out.println("Il ne reste aucun animal vivant, fin de l'experience");
+                        break;
+                    }
+                else
+                    {
 		jour = saisie_resultats(animaux, tests_dispos, semaine, jour);
-		//sauvegarde_resultats
+                    }
 	    }
 	System.out.println("Fin de la semaine");
-	
-    }
-	    
+    } 
 	
     public static int saisie_resultats(ArrayList animaux, Hashtable ht, List<String> semaine, int jour)
     {
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
 	for (int i=0;i<animaux.size();i++)
 	    {
 		boolean x = true;
 		
 		Animal animal = (Animal)animaux.get(i);
-		System.out.println("Taper x si l'animal est mort");
+                int index = animaux.indexOf(animal);
+		System.out.println("Taper x si l'animal "+animal.getId()+"  est mort");
 		String reponse = "\\^^//";
 		while (x){
 		    reponse = saisie_chaine();  // 
@@ -93,7 +136,8 @@ public class Gestion
 		
 		if (!(reponse.equals("x")))
 		    {
-			int resultat_courant = animal.getResultat();
+			int resultat_precedent = animal.getResultat();
+                        int meilleur_resultat = animal.getMeilleurResultat();
 			int resultat = 0;
 			System.out.println("Donnez le poids de l'animal "+animal.getId()+" :");
 			float poids = -1;
@@ -110,7 +154,7 @@ public class Gestion
 			
 			animal.setPoids(poids);
 			ArrayList<String> tests = trouver_tests(animal, ht);
-			// partie a modifier si changement de protocol.
+			// partie a modifier si changement de protocole.
 			for (String test : tests)
 			    {
 				switch (test)
@@ -149,15 +193,26 @@ public class Gestion
 			if (semaine.get(jour) == semaine.get(0))
 			    animal.setPoidsDebutSemaine(poids);
 			else
-			    animal.setProgression(resultat_courant);
+                            {
+			    animal.setProgression(resultat_precedent);
+                            if (resultat < meilleur_resultat) //meilleur temps ou moins d'erreurs
+                                {
+                                    animal.setMeilleurResultat(resultat);
+                                    animal.setMeilleurePerformance(semaine.get(jour));
+                                }
+                            }
 			System.out.println();
 			animal.sauvegarder(semaine.get(jour) + ".txt");
 		    }
-		//else
-		//retirer animal de laliste
+		else
+                    indexes.add(index);
 		
 	    }
 	jour++;
+        for (int index : indexes)
+            {
+                animaux.remove(index);
+            }
 	return jour;
     }
     
@@ -253,7 +308,7 @@ public class Gestion
 			    System.out.println();
 			    Souris souris = new Souris(sexe, poids, groupe);
 			    animaux.add(souris);
-			    souris.sauvegarder("Animals.txt");
+			    souris.sauvegarder("Animaux.txt");
 			    break;
 			}
 		    case "singe":
@@ -261,12 +316,26 @@ public class Gestion
 			    System.out.println();
 			    Singe singe = new Singe(sexe, poids);
 			    animaux.add(singe);
-			    singe.sauvegarder("Animals.txt");
+			    singe.sauvegarder("Animaux.txt");
 			    break;
 			}
 		    }
 	    }
     }
-	
+
+    public static void afficher_animaux(ArrayList animaux)
+    {
+        for (int i=0;i<animaux.size();i++)
+            {
+                Animal animal = (Animal)animaux.get(i);
+                animal.afficher_infos();
+            }
+    }
     
+    public static int menu()
+    {
+        System.out.println("**MENU**\n\nSaisir les animaux: 1\nSaisir les donnees: 2\nAfficher la liste d'animaux: 3\nQuitter: 0\n");
+        int choix = saisie_num();
+        return choix;
+    }
 }

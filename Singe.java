@@ -1,18 +1,17 @@
 public class Singe extends Animal
 {
-    private final String espece1 = "Singe";
+    //private final String espece1 = "Singe"; comme il n''est pas cree avant, l'espece devient null
     
     public Singe(String sexe, float poids)
     {
 	super(sexe, poids);
-	this.pop=this.espece1;
-	this.espece = espece1;
+	this.espece = "singe";
+        this.pop = this.espece;
 	
     }
 
     public void afficher_infos()
     {
-	System.out.println("Espece: "+espece1);
 	super.afficher_infos();
     }
 

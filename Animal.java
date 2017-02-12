@@ -3,9 +3,9 @@ import java.util.*;
 
 abstract class Animal
 {
-    public static int nb_animaux=0;
+    private static int nb_animaux=0;
     
-    protected int id;
+    protected final int id;
     protected final String sexe;
     protected String espece;
     protected String pop;
@@ -15,7 +15,8 @@ abstract class Animal
     protected int resultat;
     protected int progression = 0; // en pourcentage
     protected String etat = "normal"; // normal, fatigue, ou stress
-    protected int meilleure_performance; //jour de la meilleur performance
+    protected int meilleur_resultat = 0;
+    protected String meilleure_performance = "\\"; //jour de la meilleur performance
 
     public Animal(String sexe,float poids)
     {
@@ -34,7 +35,8 @@ abstract class Animal
     public int getResultat() {return resultat;}
     public int getProgression() {return progression;}
     public String getEtat() {return etat;}
-    public int getMeilleurePerformance() {return meilleure_performance;}
+    public int getMeilleurResultat() {return meilleur_resultat;}
+    public String getMeilleurePerformance() {return meilleure_performance;}
     
     public void setPoids(float poids)
     {
@@ -70,7 +72,12 @@ abstract class Animal
 	this.statut="mort";
     }
 
-    public void setMeilleurePerformance(int jour) //verif dans le main
+    public void setMeilleurResultat(int nombre)
+    {
+        this.meilleur_resultat=nombre;
+    }
+
+    public void setMeilleurePerformance(String jour) 
     {
 	this.meilleure_performance=jour;
     }
@@ -91,14 +98,14 @@ abstract class Animal
     {
 	try{
 	    BufferedWriter buff = new BufferedWriter(new FileWriter(filename, true));
-	    buff.write("Id: "+ id + "\n");
-	    buff.write("Espece: "+ espece + "\n");
-	    buff.write("Sexe: "+ sexe + "\n");
-	    buff.write("Poids: "+ poids + "\n");
-	    buff.write("Statut: "+ statut + "\n");
-	    buff.write("Progression: "+ progression + "\n");
-	    buff.write("Etat: "+ etat + "\n");
-	    buff.write("Jour de la meilleure performance: "+ meilleure_performance + "\n");
+	    buff.write("Id:"+ id + " ");
+	    buff.write("Espece:"+ espece + " ");
+	    buff.write("Sexe:"+ sexe + " ");
+	    buff.write("Poids:"+ poids + " ");
+	    buff.write("Statut:"+ statut + " ");
+	    buff.write("Progression:"+ progression + " ");
+	    buff.write("Etat:"+ etat + " ");
+	    buff.write("Jour de la meilleure performance:"+ meilleure_performance + " ");
 	    buff.newLine();
 	    buff.close();
 	}
