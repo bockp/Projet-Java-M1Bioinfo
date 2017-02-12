@@ -15,7 +15,7 @@ abstract class Animal
     protected int resultat;
     protected int progression = 0; // en pourcentage
     protected String etat = "normal"; // normal, fatigue, ou stress
-    protected int meilleur_resultat = 0;
+    protected int meilleur_resultat = 100;
     protected String meilleure_performance = "\\"; //jour de la meilleur performance
 
     public Animal(String sexe,float poids)

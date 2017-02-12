@@ -12,15 +12,19 @@ public class Image extends Test {
     public boolean getReussite() {return reussite;}
     public String getPopVisee(){return pop_visee;}
 	
-	public void saisie_utilisateur()
+    public void saisie_utilisateur() //attention, repeter 5 fois
 	{
-	    System.out.println("Nombre d'echecs ? ");
-		int nb=Gestion.saisie_num();
-		nb_echecs=nb;
-		if (nb > nb_max)
-		    reussite=true;
-		else
-		    reussite=false;
+            for (int i=0;i<5;i++)
+                {
+                    System.out.println("Nombre d'echecs ? ");
+                    int nb=Gestion.saisie_num();
+                    nb_echecs+=nb;
+                }
+             if (nb_echecs > nb_max)
+                reussite=true;
+             else
+                reussite=false;
+                
 	}
 
 

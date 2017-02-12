@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 
-//verifier calcul du stress, vider les fichiers avant execution du programme, recuperer donnees, afficher apprentissage de chaque animal, afficher jour meilleur perf, afficher meilleur apprentissage (tous, et singe/souris), afficher si perfs associees au stress
+//calcul du stress  et de la performance ne marchent pas, vider les fichiers avant execution du programme, recuperer donnees, afficher meilleur apprentissage (tous, et singe/souris), afficher si perfs associees au stress
 public class Gestion
 {
 
@@ -51,14 +51,16 @@ public class Gestion
     public static void main(String[] argv)
     {
 	Protocole protocole = new Protocole(); //possibilité de crééer plusieurs protocoles, si on rajoute des paramètres dans le constructeur
-	ArrayList animaux = new ArrayList();
+	ArrayList animaux_init = new ArrayList();
+        ArrayList animaux = new ArrayList();
 	int jour = 0;
 	
 	ArrayList<String> especes = protocole.getEspeces();
 	Hashtable tests_dispos = protocole.getTestsDispos();
 	List<String> semaine = protocole.getSemaine();
 
-        while(true)
+        boolean stop = false;
+        while(stop == false)
             {
                 int choix = menu();
                 switch (choix)
@@ -66,11 +68,13 @@ public class Gestion
                     case 0 :
                         {
                             System.out.println("Au revoir\n");
+                            stop = true;
                             break;
                         }
                     case 1 :
                         {
-                            saisie_animaux(animaux,especes);
+                            saisie_animaux(animaux_init,especes);
+                            animaux=new ArrayList(animaux_init);
                             break;
                         }
                     case 2 :
@@ -83,12 +87,28 @@ public class Gestion
                         }
                     case 3 :
                         {
-                            if (! animaux.isEmpty())
-                                afficher_animaux(animaux);
+                            if (! animaux_init.isEmpty())
+                                afficher_animaux(animaux_init);
                             else
                                 System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
                             break;
                         }
+                    case 4 :
+                        {
+                            if (! animaux_init.isEmpty())
+                                afficher_apprentissage(animaux_init);
+                            else
+                                System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
+                            break;
+                        }
+                    case 5 :
+                        {
+                            if (! animaux_init.isEmpty())
+                                afficher_meilleure_performance(animaux_init);
+                            else
+                                System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
+                            break;
+                        }    
                     }
             }
     }
@@ -205,7 +225,11 @@ public class Gestion
 			animal.sauvegarder(semaine.get(jour) + ".txt");
 		    }
 		else
-                    indexes.add(index);
+                    {
+                        animal.mort();
+                        animal.sauvegarder(semaine.get(jour)+".txt");
+                        indexes.add(index);
+                    }
 		
 	    }
 	jour++;
@@ -331,10 +355,30 @@ public class Gestion
                 animal.afficher_infos();
             }
     }
+
+    public static void afficher_apprentissage(ArrayList animaux)
+    {
+        for (int i=0;i<animaux.size();i++)
+            {
+                Animal animal = (Animal)animaux.get(i);
+                System.out.println("Animal "+animal.getId()+" :\n");
+                System.out.println("Apprentissage: "+animal.getProgression());
+            }
+    }
+
+    public static void afficher_meilleure_performance(ArrayList animaux)
+    {
+        for (int i=0;i<animaux.size();i++)
+            {
+                Animal animal = (Animal)animaux.get(i);
+                System.out.println("Animal "+animal.getId()+" :\n");
+                System.out.println("Meilleure performance le: "+animal.getMeilleurePerformance());
+            }
+    }    
     
     public static int menu()
     {
-        System.out.println("**MENU**\n\nSaisir les animaux: 1\nSaisir les donnees: 2\nAfficher la liste d'animaux: 3\nQuitter: 0\n");
+        System.out.println("**MENU**\n\nSaisir les animaux: 1\nSaisir les donnees: 2\nAfficher la liste d'animaux: 3\nAfficher l'apprentissage des animaux: 4\nAfficher le jour de la meilleure performance des animaux: 5\nQuitter: 0\n");
         int choix = saisie_num();
         return choix;
     }

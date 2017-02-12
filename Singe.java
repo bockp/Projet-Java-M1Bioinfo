@@ -6,7 +6,7 @@ public class Singe extends Animal
     {
 	super(sexe, poids);
 	this.espece = "singe";
-        this.pop = this.espece;
+        this.pop = "Singe";
 	
     }
 
