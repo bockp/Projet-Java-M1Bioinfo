@@ -64,7 +64,7 @@ abstract class Animal
 
     public void setProgression(int nombre)
     {
-	this.progression=(int)(((resultat-nombre)/nombre)*100);
+	this.progression=(int)(((resultat-nombre)*100)/nombre);
     }
 	
     public void mort()

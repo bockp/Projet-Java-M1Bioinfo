@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 
-//calcul du stress  et de la performance ne marchent pas, vider les fichiers avant execution du programme, recuperer donnees, afficher meilleur apprentissage (tous, et singe/souris), afficher si perfs associees au stress
+//vider les fichiers avant execution du programme, recuperer donnees, afficher meilleur apprentissage (tous, et singe/souris), afficher si perfs associees au stress
 public class Gestion
 {
 
@@ -214,6 +214,7 @@ public class Gestion
 			    animal.setPoidsDebutSemaine(poids);
 			else
                             {
+                            animal.setEtat();
 			    animal.setProgression(resultat_precedent);
                             if (resultat < meilleur_resultat) //meilleur temps ou moins d'erreurs
                                 {
@@ -371,8 +372,9 @@ public class Gestion
         for (int i=0;i<animaux.size();i++)
             {
                 Animal animal = (Animal)animaux.get(i);
-                System.out.println("Animal "+animal.getId()+" :\n");
+                System.out.println("Animal "+animal.getId()+" :");
                 System.out.println("Meilleure performance le: "+animal.getMeilleurePerformance());
+                System.out.println();
             }
     }    
     
