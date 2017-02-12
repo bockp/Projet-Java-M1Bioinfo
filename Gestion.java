@@ -236,7 +236,7 @@ public class Gestion
 	jour++;
         for (int index : indexes)
             {
-                animaux.remove(index);
+                animaux.remove(index); //probleme quand on supprime un truc, refaire avec une chainée
             }
 	return jour;
     }
