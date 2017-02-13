@@ -1,18 +1,2 @@
-Id: 1
-Espece: null
-Sexe: M
-Poids: 12.0
-Statut: vivant
-Progression: 0
-Etat: normal
-Jour de la meilleure performance: 0
-
-Id: 2
-Espece: souris
-Sexe: M
-Poids: 45.0
-Statut: vivant
-Progression: 300
-Etat: normal
-Jour de la meilleure performance: 0
-
+Id:1 Espece:singe Sexe:M Poids:2.0 Statut:vivant Progression:0 Etat:fatigue Jour_de_la_meilleure_performance:Mardi Resultat:10 Meilleur_resultat:10 Poids_debut_semaine:1.0 
+Id:2 Espece:souris groupe:1 Sexe:M Poids:3.0 Statut:vivant Progression:400 Etat:fatigue Jour_de_la_meilleure_performance:Mardi Resultat:5 Meilleur_resultat:5 Poids_debut_semaine:1.0 

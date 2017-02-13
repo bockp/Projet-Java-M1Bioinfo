@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+import java.util.regex.*;
 
 //vider les fichiers avant execution du programme, recuperer donnees, afficher meilleur apprentissage (tous, et singe/souris), afficher si perfs associees au stress
 public class Gestion
@@ -50,7 +50,7 @@ public class Gestion
 
     public static void main(String[] argv)
     {
-	Protocole protocole = new Protocole(); //possibilité de crééer plusieurs protocoles, si on rajoute des paramètres dans le constructeur
+	Protocole protocole = new Protocole(); //possibilit de creeer plusieurs protocoles, si on rajoute des parametres dans le constructeur
 	ArrayList animaux_init = new ArrayList();
         ArrayList animaux = new ArrayList();
 	int jour = 0;
@@ -59,6 +59,8 @@ public class Gestion
 	Hashtable tests_dispos = protocole.getTestsDispos();
 	List<String> semaine = protocole.getSemaine();
 
+	
+	
         boolean stop = false;
         while(stop == false)
             {
@@ -73,13 +75,14 @@ public class Gestion
                         }
                     case 1 :
                         {
+			    erase("Animaux.txt");
                             saisie_animaux(animaux_init,especes);
                             animaux=new ArrayList(animaux_init);
                             break;
                         }
                     case 2 :
                         {
-                            if (! animaux.isEmpty())
+			    if (! animaux.isEmpty())
                                 saisie_resultats_semaine(animaux, tests_dispos, semaine, jour);
                             else
                                 System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
@@ -108,30 +111,69 @@ public class Gestion
                             else
                                 System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
                             break;
-                        }    
+                        }
+			//case 6 :
+			//	{
+			//	    loads file data into animaux.txt, and that's it.
+			//	}
+
                     }
             }
     }
-
+    
     public static void saisie_resultats_semaine(ArrayList animaux, Hashtable tests_dispos, List<String> semaine, int jour)
     {
+	
         for(Iterator<String> e = semaine.iterator();e.hasNext();)
 	    {
 		String nomJour = e.next();
-		System.out.println(nomJour);
+		System.out.println(nomJour.toUpperCase() + "\n");
+		File fichierJour = new File(nomJour + ".txt");
+		boolean exists = fichierJour.exists();
+		boolean loaded = false;
+		boolean x = exists;
+		String choix = "\\<0>//";
+		while(x)
+		    {
+			System.out.println("Voulez-vous charger les données existants ? ");
+			choix = saisie_chaine();
+			if (choix.equals("Y") || choix.equals("N"))
+			    {
+				x = false;
+			    }
+			else
+			    {
+				System.out.println("Y or N only.\n");
+			    }
+		    }
+
+		
+		if(choix.equals("Y")){
+		    jour += 1;
+		    loadAnimalData(animaux,nomJour);
+		    loaded = true;
+				      
+		}
+		else
+		    {
+			erase(nomJour+".txt");
+		    }
+		
+		
+		
+		if(!loaded && animaux.size() != 0)
+		    {
+			jour = saisie_resultats(animaux, tests_dispos, semaine, jour);
+		    }
 		if (animaux.size() == 0)
-                    {
-                        System.out.println("Il ne reste aucun animal vivant, fin de l'experience");
-                        break;
-                    }
-                else
-                    {
-		jour = saisie_resultats(animaux, tests_dispos, semaine, jour);
-                    }
+		    {
+			System.out.println("Il ne reste aucun animal vivant, fin de l'experience");
+			break;
+		    }
 	    }
 	System.out.println("Fin de la semaine");
-    } 
-	
+    }
+    
     public static int saisie_resultats(ArrayList animaux, Hashtable ht, List<String> semaine, int jour)
     {
         ArrayList<Integer> indexes = new ArrayList<Integer>();
@@ -264,6 +306,8 @@ public class Gestion
     public static void saisie_animaux(ArrayList animaux, ArrayList especes)
     {
 	
+	
+	
 	for (int i=0;i<especes.size();i++)
 	    {
 		String espece = (String)especes.get(i);
@@ -390,4 +434,122 @@ public class Gestion
         int choix = saisie_num();
         return choix;
     }
+    
+    // function of the Apocalypse.
+    public static void erase(String file){
+	try{
+	    PrintWriter writer = new PrintWriter(file); // Opens the file to Write, which deletes it's content.
+	    writer.close();
+	}
+	catch(FileNotFoundException e) {;} 
+    }
+
+    // fonction de chargement des données d'une journée
+    public static void loadAnimalData(ArrayList animaux, String nom)
+    {
+	try {
+	    BufferedReader lecteurDonnee = new BufferedReader(new FileReader(nom+".txt"));
+	    String ligne;
+	    String sexe;
+	    float poids;
+	    String statut;
+	    String meilPerfor;
+	    int progression;
+	    int groupe;
+	    int res;
+	    int meilRes;
+	    float poidsDebutSem;
+	    
+	   
+	    while( (ligne = lecteurDonnee.readLine()) != null)
+		{
+		    Pattern formatSinge = Pattern.compile("Id:(\\S+) Espece:(\\S+) Sexe:(\\S) Poids:(\\S+) Statut:(\\S+) Progression:(\\S+) Etat:(\\S+) Jour_de_la_meilleure_performance:(\\S+) Resultat:(\\S+) Meilleur_resultat:(\\S+) Poids_debut_semaine:(\\S+)");
+		    Pattern formatSouris = Pattern.compile("Id:(\\S+) Espece:(\\S+) groupe:(\\S+) Sexe:(\\S+) Poids:(\\S+) Statut:(\\S+) Progression:(\\S+) Etat:(\\S+) Jour_de_la_meilleure_performance:(\\S+) Resultat:(\\S+) Meilleur_resultat:(\\S+) Poids_debut_semaine:(\\S+)");
+
+
+
+		    
+		    Matcher singe = formatSinge.matcher(ligne);
+		    Matcher souris = formatSouris.matcher(ligne);
+
+
+		    // inserer un pattern, matcher, et if pour chaque nouvelle espece.
+		    
+		    if(singe.find())
+			{
+			    sexe = singe.group(3);
+			    poids = Float.valueOf(singe.group(4));
+			    statut = singe.group(5);
+			    progression = Integer.valueOf(singe.group(6));
+			    
+			    meilPerfor = singe.group(8);
+			    res = Integer.valueOf(singe.group(9));
+			    meilRes = Integer.valueOf(singe.group(10));
+			    poidsDebutSem = Float.valueOf(singe.group(11));
+			    for (int i=0;i<animaux.size();i++)
+				{
+				    Animal monkey = (Animal)animaux.get(i);
+				    if(monkey.getId() == Integer.valueOf(singe.group(1))){
+					monkey.setProgressionDirect(progression);
+					monkey.setMeilleurePerformance(meilPerfor); // set rest of information, then add to anim
+					monkey.setPoidsDebutSemaine(poidsDebutSem);
+					monkey.setEtat();
+					if(statut.equals("mort"))
+					    {
+						monkey.mort();
+					    }
+					monkey.setResultat(res);
+					monkey.setMeilleurResultat(meilRes);
+				    }
+				} 
+			    
+
+
+			    
+			    
+			    
+			    
+			}
+		    if(souris.find())
+			{
+			    
+			    groupe = Integer.valueOf(souris.group(3));
+			    sexe = souris.group(4);
+			    poids = Float.valueOf(souris.group(5));
+			    statut = souris.group(6);
+			    progression = Integer.valueOf(souris.group(7));
+			    
+			    meilPerfor = souris.group(9);
+			    res = Integer.valueOf(souris.group(10));
+			    meilRes = Integer.valueOf(souris.group(11));
+			    poidsDebutSem = Float.valueOf(souris.group(12));
+
+			    for (int i=0;i<animaux.size();i++)
+				{
+				    Animal mouse = (Animal)animaux.get(i);
+				    if(mouse.getId() == Integer.valueOf(souris.group(1))){
+					mouse.setProgressionDirect(progression);
+					mouse.setMeilleurePerformance(meilPerfor); // set rest of information, then add to anim
+					mouse.setPoidsDebutSemaine(poidsDebutSem);
+					mouse.setEtat();
+					if(statut.equals("mort"))
+					    {
+						mouse.mort();
+					    }
+					mouse.setResultat(res);
+					mouse.setMeilleurResultat(meilRes);				    }
+				} 
+			    
+			    
+			    
+			}
+		}
+	}
+	catch(FileNotFoundException e){System.out.println("Erreur, le fichier existe-t-il vraiment ?");}
+	catch(IOException e){System.out.println("Erreur: "+ e);}
+
+    }
 }
+
+
+// create menu option to load data from animal file to .txt + create script. if they create a new animal list, delete ALL day .txts

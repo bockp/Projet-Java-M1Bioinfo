@@ -32,7 +32,10 @@ public class Souris extends Animal
 	    buff.write("Statut:"+ statut + " ");
 	    buff.write("Progression:"+ progression + " ");
 	    buff.write("Etat:"+ etat + " ");
-	    buff.write("Jour de la meilleure performance:"+ meilleure_performance + " ");
+	    buff.write("Jour_de_la_meilleure_performance:"+ meilleure_performance + " ");
+	    buff.write("Resultat:" + resultat + " ");
+	    buff.write("Meilleur_resultat:" + meilleur_resultat  + " ");
+	    buff.write("Poids_debut_semaine:"+ poids_debut_semaine +" ");
 	    buff.newLine();
 	    buff.close();
 	}

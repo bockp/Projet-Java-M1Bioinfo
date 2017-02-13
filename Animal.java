@@ -15,7 +15,7 @@ abstract class Animal
     protected int resultat;
     protected int progression = 0; // en pourcentage
     protected String etat = "normal"; // normal, fatigue, ou stress
-    protected int meilleur_resultat = 100;
+    protected int meilleur_resultat = 10000000;
     protected String meilleure_performance = "\\"; //jour de la meilleur performance
 
     public Animal(String sexe,float poids)
@@ -66,6 +66,11 @@ abstract class Animal
     {
 	this.progression=(int)(((resultat-nombre)*100)/nombre);
     }
+
+    public void setProgressionDirect(int nombre)
+    {
+	this.progression=nombre;
+    }
 	
     public void mort()
     {
@@ -105,7 +110,10 @@ abstract class Animal
 	    buff.write("Statut:"+ statut + " ");
 	    buff.write("Progression:"+ progression + " ");
 	    buff.write("Etat:"+ etat + " ");
-	    buff.write("Jour de la meilleure performance:"+ meilleure_performance + " ");
+	    buff.write("Jour_de_la_meilleure_performance:"+ meilleure_performance + " ");
+	    buff.write("Resultat:" + resultat + " ");
+	    buff.write("Meilleur_resultat:" + meilleur_resultat  + " ");
+	    buff.write("Poids_debut_semaine:"+ poids_debut_semaine +" ");
 	    buff.newLine();
 	    buff.close();
 	}

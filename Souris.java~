@@ -1,3 +1,4 @@
+import java.io.*;
 public class Souris extends Animal
 {
     private final int groupe;
@@ -17,6 +18,25 @@ public class Souris extends Animal
     {
     	super.afficher_infos();
 	System.out.println("Groupe: "+groupe);
+    }
+
+    public void sauvegarder(String filename)
+    {
+	try{
+	    BufferedWriter buff = new BufferedWriter(new FileWriter(filename, true));
+	    buff.write("Id:"+ id + " ");
+	    buff.write("Espece:"+ espece + " ");
+	    buff.write("groupe:"+ groupe + " ");
+	    buff.write("Sexe:"+ sexe + " ");
+	    buff.write("Poids:"+ poids + " ");
+	    buff.write("Statut:"+ statut + " ");
+	    buff.write("Progression:"+ progression + " ");
+	    buff.write("Etat:"+ etat + " ");
+	    buff.write("Jour de la meilleure performance:"+ meilleure_performance + " ");
+	    buff.newLine();
+	    buff.close();
+	}
+	catch(IOException e) {System.out.println("Erreur de sauvegarde: "+ e);}
     }
 }
     
