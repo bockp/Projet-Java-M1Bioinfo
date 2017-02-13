@@ -1,7 +1,7 @@
 import java.io.*;
 public class Souris extends Animal
 {
-    private final int groupe;
+    private int groupe;
     
     public Souris(String sexe, float poids, int groupe)
     {
@@ -12,6 +12,15 @@ public class Souris extends Animal
 	    this.pop="Souris 1";
 	else if (groupe == 2)
 	    this.pop="Souris 2";
+    }
+
+    public void setGroup(int groupe){
+	this.groupe = groupe;
+	if (groupe == 1)
+	    this.pop="Souris 1";
+	else if (groupe == 2)
+	    this.pop="Souris 2";
+	
     }
 
     public void afficher_infos()

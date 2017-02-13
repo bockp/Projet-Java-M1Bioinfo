@@ -118,5 +118,8 @@ abstract class Animal
 	    buff.close();
 	}
 	catch(IOException e) {System.out.println("Erreur de sauvegarde: "+ e);}
+	
     }
+
+    public void resetIDs(){nb_animaux = 0;}
 }

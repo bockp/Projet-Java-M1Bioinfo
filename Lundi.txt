@@ -1,2 +1,4 @@
-Id:1 Espece:singe Sexe:M Poids:1.0 Statut:vivant Progression:0 Etat:normal Jour_de_la_meilleure_performance:\ Resultat:10 Meilleur_resultat:10000000 Poids_debut_semaine:1.0 
-Id:2 Espece:souris groupe:1 Sexe:M Poids:1.0 Statut:vivant Progression:0 Etat:normal Jour_de_la_meilleure_performance:\ Resultat:1 Meilleur_resultat:10000000 Poids_debut_semaine:1.0 
+Id:1 Espece:singe Sexe:M Poids:1.0 Statut:vivant Progression:0 Etat:fatigue Jour_de_la_meilleure_performance:\ Resultat:5 Meilleur_resultat:10000000 Poids_debut_semaine:1.0 
+Id:2 Espece:souris groupe:1 Sexe:M Poids:1.0 Statut:vivant Progression:0 Etat:fatigue Jour_de_la_meilleure_performance:\ Resultat:1 Meilleur_resultat:10000000 Poids_debut_semaine:1.0 
+Id:1 Espece:singe Sexe:M Poids:1.0 Statut:vivant Progression:0 Etat:fatigue Jour_de_la_meilleure_performance:\ Resultat:5 Meilleur_resultat:10000000 Poids_debut_semaine:1.0 
+Id:2 Espece:souris groupe:1 Sexe:M Poids:1.0 Statut:vivant Progression:0 Etat:fatigue Jour_de_la_meilleure_performance:\ Resultat:1 Meilleur_resultat:10000000 Poids_debut_semaine:1.0 

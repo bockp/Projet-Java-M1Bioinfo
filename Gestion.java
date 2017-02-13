@@ -76,7 +76,7 @@ public class Gestion
                     case 1 :
                         {
 			    erase("Animaux.txt");
-                            saisie_animaux(animaux_init,especes);
+                            saisie_animaux(animaux_init,especes,semaine);
                             animaux=new ArrayList(animaux_init);
                             break;
                         }
@@ -91,7 +91,7 @@ public class Gestion
                     case 3 :
                         {
                             if (! animaux_init.isEmpty())
-                                afficher_animaux(animaux_init);
+                                afficher_animaux(animaux_init,semaine);
                             else
                                 System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
                             break;
@@ -112,11 +112,13 @@ public class Gestion
                                 System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
                             break;
                         }
-			//case 6 :
-			//	{
-			//	    loads file data into animaux.txt, and that's it.
-			//	}
-
+		    case 6 :
+			{
+			    loadAnimalData(animaux,"Animaux",false);
+			    loadAnimalData(animaux_init,"Animaux",false);
+			    break;
+			}
+			
                     }
             }
     }
@@ -150,7 +152,7 @@ public class Gestion
 		
 		if(choix.equals("Y")){
 		    jour += 1;
-		    loadAnimalData(animaux,nomJour);
+		    loadAnimalData(animaux,nomJour,true);
 		    loaded = true;
 				      
 		}
@@ -303,10 +305,14 @@ public class Gestion
     }
 		
 
-    public static void saisie_animaux(ArrayList animaux, ArrayList especes)
+    public static void saisie_animaux(ArrayList animaux, ArrayList especes, List<String> semaine)
     {
-	
-	
+	for(Iterator<String> e = semaine.iterator();e.hasNext();)
+	    {
+		String nomJour = e.next();
+		erase(nomJour+".txt"); // eliminates the day files, as the user has chosen to create a new animal list from scratch, and they are therefore incompatible.
+	    }
+
 	
 	for (int i=0;i<especes.size();i++)
 	    {
@@ -398,8 +404,14 @@ public class Gestion
 	    }
     }
 
-    public static void afficher_animaux(ArrayList animaux)
+    public static void afficher_animaux(ArrayList animaux, List<String> semaine)
     {
+
+	 for(Iterator<String> e = semaine.iterator();e.hasNext();)
+	    {
+		String nomJour = e.next();
+		
+	    }
         for (int i=0;i<animaux.size();i++)
             {
                 Animal animal = (Animal)animaux.get(i);
@@ -445,8 +457,9 @@ public class Gestion
     }
 
     // fonction de chargement des données d'une journée
-    public static void loadAnimalData(ArrayList animaux, String nom)
+    public static void loadAnimalData(ArrayList animaux, String nom, boolean replace)
     {
+
 	try {
 	    BufferedReader lecteurDonnee = new BufferedReader(new FileReader(nom+".txt"));
 	    String ligne;
@@ -460,7 +473,13 @@ public class Gestion
 	    int meilRes;
 	    float poidsDebutSem;
 	    
-	   
+	    Singe temp1;
+	    Souris temp2;
+	    if(!replace){
+		animaux.clear();
+		temp1 = new Singe("M",1);
+		temp1.resetIDs();
+	    }
 	    while( (ligne = lecteurDonnee.readLine()) != null)
 		{
 		    Pattern formatSinge = Pattern.compile("Id:(\\S+) Espece:(\\S+) Sexe:(\\S) Poids:(\\S+) Statut:(\\S+) Progression:(\\S+) Etat:(\\S+) Jour_de_la_meilleure_performance:(\\S+) Resultat:(\\S+) Meilleur_resultat:(\\S+) Poids_debut_semaine:(\\S+)");
@@ -486,24 +505,42 @@ public class Gestion
 			    res = Integer.valueOf(singe.group(9));
 			    meilRes = Integer.valueOf(singe.group(10));
 			    poidsDebutSem = Float.valueOf(singe.group(11));
-			    for (int i=0;i<animaux.size();i++)
-				{
-				    Animal monkey = (Animal)animaux.get(i);
-				    if(monkey.getId() == Integer.valueOf(singe.group(1))){
-					monkey.setProgressionDirect(progression);
-					monkey.setMeilleurePerformance(meilPerfor); // set rest of information, then add to anim
-					monkey.setPoidsDebutSemaine(poidsDebutSem);
-					monkey.setEtat();
-					if(statut.equals("mort"))
-					    {
-						monkey.mort();
-					    }
-					monkey.setResultat(res);
-					monkey.setMeilleurResultat(meilRes);
-				    }
-				} 
-			    
 
+			    if(replace){
+				for (int i=0;i<animaux.size();i++)
+				    {
+					Singe monkey = (Singe)animaux.get(i);
+					if(monkey.getId() == Integer.valueOf(singe.group(1))){
+					    monkey.setProgressionDirect(progression);
+					    monkey.setMeilleurePerformance(meilPerfor); // set rest of information, then add to monkey
+					    monkey.setPoidsDebutSemaine(poidsDebutSem);
+					    monkey.setEtat();
+					    if(statut.equals("mort"))
+						{
+						    monkey.mort();
+						}
+					    monkey.setResultat(res);
+					    monkey.setMeilleurResultat(meilRes);
+					}
+				    } 
+			    }
+			    else
+				{
+				    temp1 = new Singe(sexe,poids);
+				    temp1.setProgressionDirect(progression);
+				    temp1.setMeilleurePerformance(meilPerfor); // set rest of information, then add to monkey
+				    temp1.setPoidsDebutSemaine(poidsDebutSem);
+				    temp1.setEtat();
+				    if(statut.equals("mort"))
+					{
+					   temp1.mort();
+					}
+				   temp1.setResultat(res);
+				    temp1.setMeilleurResultat(meilRes);
+				    // ici, mettre une capacite a creer un nouvel objet du bon type et lui assigner les valeurs, avant de mettre ca dans une ArrayList anim et l'enregistrer comme
+				    // Animaux.txt (si le boolean replace a ete mit en faux. aka on veut remplacer tout)
+				    animaux.add(temp1);
+				}
 
 			    
 			    
@@ -524,21 +561,44 @@ public class Gestion
 			    meilRes = Integer.valueOf(souris.group(11));
 			    poidsDebutSem = Float.valueOf(souris.group(12));
 
-			    for (int i=0;i<animaux.size();i++)
+
+			    if(replace){
+				for (int i=0;i<animaux.size();i++)
+				    {
+					Souris mouse = (Souris)animaux.get(i);
+					if(mouse.getId() == Integer.valueOf(souris.group(1))){
+					    mouse.setProgressionDirect(progression);
+					    mouse.setMeilleurePerformance(meilPerfor); // set rest of information, then add to mouse
+					    mouse.setPoidsDebutSemaine(poidsDebutSem);
+					    mouse.setEtat();
+					    mouse.setGroup(groupe);
+					    if(statut.equals("mort"))
+						{
+						    mouse.mort();
+						}
+					    mouse.setResultat(res);
+					    mouse.setMeilleurResultat(meilRes);
+					}
+				    }
+			    }
+			    else
 				{
-				    Animal mouse = (Animal)animaux.get(i);
-				    if(mouse.getId() == Integer.valueOf(souris.group(1))){
-					mouse.setProgressionDirect(progression);
-					mouse.setMeilleurePerformance(meilPerfor); // set rest of information, then add to anim
-					mouse.setPoidsDebutSemaine(poidsDebutSem);
-					mouse.setEtat();
-					if(statut.equals("mort"))
-					    {
-						mouse.mort();
-					    }
-					mouse.setResultat(res);
-					mouse.setMeilleurResultat(meilRes);				    }
-				} 
+				    temp2 = new Souris(sexe,poids,groupe);
+				    temp2.setProgressionDirect(progression);
+				    temp2.setMeilleurePerformance(meilPerfor); // set rest of information, then add to monkey
+				    temp2.setPoidsDebutSemaine(poidsDebutSem);
+				    temp2.setEtat();
+				    if(statut.equals("mort"))
+					{
+					    temp2.mort();
+					}
+				    temp2.setResultat(res);
+				    temp2.setMeilleurResultat(meilRes);
+				    // ici, mettre une capacite a creer un nouvel objet du bon type et lui assigner les valeurs, avant de mettre ca dans une ArrayList anim et l'enregistrer comme
+				    // Animaux.txt (si le boolean replace a ete mit en faux. aka on veut remplacer tout)
+				    animaux.add(temp2);
+				    
+				}
 			    
 			    
 			    
