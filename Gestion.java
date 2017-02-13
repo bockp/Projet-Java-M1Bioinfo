@@ -236,7 +236,13 @@ public class Gestion
 	jour++;
         for (int index : indexes)
             {
-                animaux.remove(index); //probleme quand on supprime un truc, refaire avec une chainée
+		try {
+		    animaux.remove(index);
+		}
+		catch (IndexOutOfBoundsException e){
+		    index-=1;
+		    animaux.remove(index);
+		}
             }
 	return jour;
     }
