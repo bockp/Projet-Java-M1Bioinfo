@@ -1,2 +1,2 @@
-Id:1 Espece:singe Sexe:M Poids:22.0 Statut:mort Progression:-66 Etat:fatigue Jour_de_la_meilleure_performance:Mardi Resultat:1 Meilleur_resultat:1 Poids_debut_semaine:20.0 
-Id:2 Espece:souris groupe:2 Sexe:F Poids:0.9 Statut:mort Progression:-50 Etat:fatigue Jour_de_la_meilleure_performance:Mardi Resultat:2 Meilleur_resultat:2 Poids_debut_semaine:1.0 
+Id:1 Espece:singe Sexe:M Poids:21.0 Statut:mort Progression:75 Etat:fatigue Jour_de_la_meilleure_performance:Mardi Resultat:1 Meilleur_resultat:1 Poids_debut_semaine:12.0 
+Id:2 Espece:souris groupe:2 Sexe:F Poids:1.3 Statut:mort Progression:100 Etat:fatigue Jour_de_la_meilleure_performance:Mardi Resultat:6 Meilleur_resultat:6 Poids_debut_semaine:1.5 

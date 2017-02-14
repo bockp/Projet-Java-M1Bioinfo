@@ -89,6 +89,7 @@ abstract class Animal
 
     public void afficher_infos()
     {
+	System.out.println();
 	System.out.println("Espece: "+espece);
 	System.out.println("Id: "+id);
 	System.out.println("Sexe: "+sexe);
@@ -96,7 +97,6 @@ abstract class Animal
 	System.out.println("Statut: "+statut);
 	System.out.println("Progression: "+progression);
 	System.out.println("Etat: "+etat);
-	System.out.println();
     }
 
     public void sauvegarder(String filename)

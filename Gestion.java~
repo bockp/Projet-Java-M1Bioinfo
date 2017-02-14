@@ -52,7 +52,6 @@ public class Gestion
     {
 	Protocole protocole = new Protocole(); //possibilit de creeer plusieurs protocoles, si on rajoute des parametres dans le constructeur
 	
-	//ArrayList animaux_init = new ArrayList();
         ArrayList animaux = new ArrayList();
 	int jour = 0;
 	boolean saisie = false;
@@ -96,7 +95,7 @@ public class Gestion
                     case 3 :
                         {
                             if (! animaux.isEmpty())
-                                afficher_animaux(animaux,semaine);
+                                afficher_animaux(animaux, semaine);
                             else
                                 System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
                             break;
@@ -140,18 +139,22 @@ public class Gestion
                             else
                                 System.out.println("Erreur, vous devez d'abord saisir les donnees.\n");
                             break;
-		    case 9 : //a rajouter au menu !!!!!!!!!
+			}
+		    case 9 :
 			{
 			    loadAnimalData(animaux,"Animaux",false);
-			    loadAnimalData(animaux_init,"Animaux",false);
+			    System.out.println("Liste d'animaux chargee");
 			    break;
 			}
-		    
+		    default :
+			{
+			    System.out.println("Erreur, votre choix est invalide");
+			}	    
 			
                     }
             }
     }
-	// continuer ICI
+
     public static void saisie_resultats_semaine(ArrayList animaux, Hashtable tests_dispos, List<String> semaine, int jour)
     {
 	
@@ -166,7 +169,7 @@ public class Gestion
 		String choix = "\\<0>//";
 		while(x)
 		    {
-			System.out.println("Voulez-vous charger les données existants ? ");
+			System.out.println("Voulez-vous charger les donnees existantes ? (Y/N) "); //on suppose que les donnees de chaque jour sont coherentes avec les donnes precedentes (par exemple, si un animal est mort, il n'apparaitra pas dans les fichiers txt des jours suivants)
 			choix = saisie_chaine();
 			if (choix.equals("Y") || choix.equals("N"))
 			    {
@@ -174,12 +177,13 @@ public class Gestion
 			    }
 			else
 			    {
-				System.out.println("Y or N only.\n");
+				System.out.println("Choisissez Y ou N.\n");
 			    }
 		    }
 
 		
 		if(choix.equals("Y")){
+		    System.out.println("Donnees chargees\n");
 		    jour += 1;
 		    loadAnimalData(animaux,nomJour,true);
 		    loaded = true;
@@ -194,26 +198,22 @@ public class Gestion
 		
 		if(!loaded && animaux.size() != 0)
 		    {
-			jour = saisie_resultats(animaux, tests_dispos, semaine, jour);
+			jour = saisie_resultats(animaux, tests_dispos, semaine, jour); 
 		    }
-		if (animaux.size() == 0)
-		    {
-			System.out.println("Il ne reste aucun animal vivant, fin de l'experience");
-			break;
-		    }
+
 	    }
 	System.out.println("Fin de la semaine");
     }
     
     public static int saisie_resultats(ArrayList animaux, Hashtable ht, List<String> semaine, int jour)
     {
-        ArrayList<Integer> indexes = new ArrayList<Integer>();
 	for (int i=0;i<animaux.size();i++)
 	    {
 		boolean x = true;
 		
 		Animal animal = (Animal)animaux.get(i);
-                int index = animaux.indexOf(animal);
+		if (! (animal.getStatut() == "mort"))
+		    {
 		System.out.println("Taper x si l'animal "+animal.getId()+"  est mort");
 		String reponse = "\\^^//";
 		while (x){
@@ -301,22 +301,12 @@ public class Gestion
 		else
                     {
                         animal.mort();
+			System.out.println("L'animal ne sera plus comptabilise");
                         animal.sauvegarder(semaine.get(jour)+".txt");
-                        indexes.add(index);
                     }
-		
+		    } //fin du if not animal mort
 	    }
 	jour++;
-        for (int index : indexes)
-            {
-		try {
-		    animaux.remove(index);
-		}
-		catch (IndexOutOfBoundsException e){
-		    index-=1;
-		    animaux.remove(index);
-		}
-            }
 	return jour;
     }
     
@@ -346,7 +336,7 @@ public class Gestion
 	for (int i=0;i<especes.size();i++)
 	    {
 		String espece = (String)especes.get(i);
-		saisie_animaux_type(animaux,espece);
+		saisie_animaux_type(animaux, espece);
 	    }
 		
     }
@@ -374,7 +364,7 @@ public class Gestion
 		System.out.println("Sexe(M/F) ?");
 		while (x){
 		    sexe = saisie_chaine();
-		    if((sexe.equals("M") || sexe.equals("F"))) { // saisie correcte, sinon recommence le saisie.
+		    if((sexe.equals("M") || sexe.equals("F"))) { // saisie correcte, sinon recommence la saisie.
 			x = false;
 		    }
 		    else {
@@ -406,8 +396,8 @@ public class Gestion
 			    int groupe = -1;
 			    while (x){
 				groupe = saisie_num();
-				if(groupe > 0){ // saisie correctement, sinon recommence le saisie.
-				    x = false; //
+				if(groupe > 0){ // saisie correctement, sinon recommence la saisie.
+				    x = false; 
 				}
 				else {
 				    System.out.println("Erreur, veuillez retaper le numero de groupe.");
@@ -440,8 +430,8 @@ public class Gestion
 	    {
 		String nomJour = e.next();
 		
-	    }
-        for (int i=0;i<animaux.size();i++)
+	    } // ??
+	for (int i=0;i<animaux.size();i++)
             {
                 Animal animal = (Animal)animaux.get(i);
                 animal.afficher_infos();
@@ -453,8 +443,9 @@ public class Gestion
         for (int i=0;i<animaux.size();i++)
             {
                 Animal animal = (Animal)animaux.get(i);
-                System.out.println("Animal "+animal.getId()+" :\n");
+                System.out.println("Animal "+animal.getId()+":");
                 System.out.println("Apprentissage: "+animal.getProgression());
+		System.out.println();
             }
     }
 
@@ -467,11 +458,159 @@ public class Gestion
                 System.out.println("Meilleure performance le: "+animal.getMeilleurePerformance());
                 System.out.println();
             }
-    }    
+    }
+
+    public static void animaux_meilleures_performances(ArrayList animaux)
+    {
+	ArrayList meilleurs_animaux = new ArrayList(); //souris, singes, etc
+	meilleurs_animaux.add(null);
+	meilleurs_animaux.add(null);
+	ArrayList<Integer> maxs = new ArrayList<Integer>(); //souris, singes, etc
+	maxs.add(0);
+	maxs.add(0);
+	for (int i=0;i<animaux.size();i++)
+            {
+                Animal animal = (Animal)animaux.get(i);
+		int perf = animal.getProgression();
+		String espece = animal.getEspece();
+		switch (espece)
+		    {
+		    case "souris":
+			{			
+			    if (perf > maxs.get(0))
+				{
+				    maxs.set(0,perf);
+				    meilleurs_animaux.set(0,animal);
+				}
+			    break;
+			}
+		    case "singe":
+			{			
+			    if (perf > maxs.get(1))
+				{
+				    maxs.set(1,perf);
+				    meilleurs_animaux.set(1,animal);
+				}
+			    break;
+			}
+			// rajouter cases pour d'autres especes
+		    }
+	    }
+	try {
+	System.out.println("Les animaux qui ont le meilleur apprentissage sont :");
+	for (int j=0;j<meilleurs_animaux.size();j++)
+	    {
+		if (j==0)
+		    System.out.println("Souris:");
+		else if (j==1)
+		    System.out.println("Singes:");
+		Animal courant = (Animal)meilleurs_animaux.get(j);
+		courant.afficher_infos();
+	    }
+	}
+	catch (NullPointerException e) {
+	    System.out.println("Erreur, aucun animal ne correspond"); //si la performance est negative
+	}
+    }
+
+    public static void meilleure_espece(ArrayList animaux)
+    {
+	ArrayList<Integer> totaux = new ArrayList<Integer>(); //souris, singes, etc
+	totaux.add(0);
+	totaux.add(0);
+	ArrayList<Integer> nbs = new ArrayList<Integer>(); //souris, singes, etc
+	nbs.add(0);
+	nbs.add(0);
+	int val;
+	int nb;
+	for (int i=0;i<animaux.size();i++)
+            {
+                Animal animal = (Animal)animaux.get(i);
+		int perf = animal.getProgression();
+		String espece = animal.getEspece();
+		switch (espece)
+		    {
+		    case "souris":
+			{
+			    nb = nbs.get(i);
+			    nbs.set(0,nb++);
+			    val= totaux.get(i);
+			    totaux.set(0,val+perf);
+			    break;
+			}
+		    case "singe":
+			{
+			    nb = nbs.get(i);
+			    nbs.set(1,nb++);
+			    val= totaux.get(i);
+			    totaux.set(1,val+perf);
+			    break;
+			}
+			// rajouter cases pour d'autres especes
+		    }
+	    }
+	int moy_souris = totaux.get(0) / nbs.get(0);
+	int moy_singes = totaux.get(1) / nbs.get(1);
+	if (moy_souris > moy_singes)
+	    System.out.println("Les souris ont le plus appris : moyenne = "+moy_souris);
+	else
+	    System.out.println("Les singes ont le plus appris : moyenne = "+moy_singes);
+	
+    }
+
+    public static void stress(ArrayList animaux)
+    {
+	ArrayList<Integer> totaux = new ArrayList<Integer>(); //normaux, stresses
+	totaux.add(0);
+	totaux.add(0);
+	ArrayList<Integer> nbs = new ArrayList<Integer>(); //normaux, stresses
+	nbs.add(0);
+	nbs.add(0);
+	int val;
+	int nb;
+	for (int i=0;i<animaux.size();i++)
+            {
+                Animal animal = (Animal)animaux.get(i);
+		int perf = animal.getProgression();
+		String etat = animal.getEtat();
+		for (int j=0;j<totaux.size();j++)
+		    {
+			nb = nbs.get(j);
+			val= totaux.get(j);
+			switch (etat)
+			    {
+			    case "normal":
+				{
+				    nbs.set(0,nb++);
+				    totaux.set(0,val+perf);
+				    break;
+				}
+			    default :
+				{
+				    nbs.set(1,nb++);
+				    totaux.set(1,val+perf);
+				    break;
+				}
+				// rajouter cases pour d'autres especes
+			    }
+		    }
+	    }
+	try {
+	int moy_normaux = totaux.get(0) / nbs.get(0);
+	int moy_stresses = totaux.get(1) / nbs.get(1);
+	if (moy_normaux > moy_stresses)
+	    System.out.println("Les individus non streses ont le plus appris : moyenne = "+moy_normaux);
+	else
+	    System.out.println("Les individus stresses ont le plus appris : moyenne = "+moy_stresses);
+	}
+	catch (ArithmeticException e){
+	    System.out.println("Tous vos animaux sont dans le meme etat");
+	}
+    }
     
     public static int menu()
     {
-        System.out.println("**MENU**\n\nSaisir les animaux: 1\nSaisir les donnees: 2\nAfficher la liste d'animaux: 3\nAfficher l'apprentissage des animaux: 4\nAfficher le jour de la meilleure performance des animaux: 5\nQuitter: 0\n");
+         System.out.println("**MENU**\n\nSaisir les animaux: 1\nSaisir les donnees: 2\nAfficher la liste d'animaux: 3\nAfficher l'apprentissage des animaux: 4\nAfficher le jour de la meilleure performance des animaux: 5\nAfficher les animaux qui ont la meilleure progression: 6\nAfficher la meilleure espece: 7\nAfficher conclusion de l'etude: 8\nCharger une liste d'animaux: 9\n Quitter: 0\n");
         int choix = saisie_num();
         return choix;
     }
