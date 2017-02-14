@@ -3,7 +3,7 @@ import java.util.*;
 
 abstract class Animal
 {
-    public int nb_animaux=0;
+    private static int nb_animaux=0;
     
     protected final int id;
     protected final String sexe;
@@ -15,13 +15,14 @@ abstract class Animal
     protected int resultat;
     protected int progression = 0; // en pourcentage
     protected String etat = "normal"; // normal, fatigue, ou stress
-    protected int meilleure_performance; //jour de la meilleur performance
+    protected int meilleur_resultat = 10000000;
+    protected String meilleure_performance = "\\"; //jour de la meilleur performance
 
     public Animal(String sexe,float poids)
     {
 	this.sexe = sexe;
 	this.poids = poids;
-	nb_animaux++;
+	this.nb_animaux++;
 	this.id=nb_animaux;
     }
 
@@ -34,7 +35,8 @@ abstract class Animal
     public int getResultat() {return resultat;}
     public int getProgression() {return progression;}
     public String getEtat() {return etat;}
-    public int getMeilleurePerformance() {return meilleure_performance;}
+    public int getMeilleurResultat() {return meilleur_resultat;}
+    public String getMeilleurePerformance() {return meilleure_performance;}
     
     public void setPoids(float poids)
     {
@@ -62,7 +64,12 @@ abstract class Animal
 
     public void setProgression(int nombre)
     {
-	this.progression=(int)(((resultat-nombre)/nombre)*100);
+	this.progression=(int)(((resultat-nombre)*100)/nombre);
+    }
+
+    public void setProgressionDirect(int nombre)
+    {
+	this.progression=nombre;
     }
 	
     public void mort()
@@ -70,13 +77,19 @@ abstract class Animal
 	this.statut="mort";
     }
 
-    public void setMeilleurePerformance(int jour) //verif dans le main
+    public void setMeilleurResultat(int nombre)
+    {
+        this.meilleur_resultat=nombre;
+    }
+
+    public void setMeilleurePerformance(String jour) 
     {
 	this.meilleure_performance=jour;
     }
 
     public void afficher_infos()
     {
+	System.out.println();
 	System.out.println("Espece: "+espece);
 	System.out.println("Id: "+id);
 	System.out.println("Sexe: "+sexe);
@@ -84,21 +97,29 @@ abstract class Animal
 	System.out.println("Statut: "+statut);
 	System.out.println("Progression: "+progression);
 	System.out.println("Etat: "+etat);
-	System.out.println();
     }
 
-    public void sauvegarder() throws IOException
+    public void sauvegarder(String filename)
     {
-	BufferedWriter buff = new BufferedWriter(new FileWriter("resultat.txt"));
-	buff.write("Espece: "+espece);
-	buff.write("Id: "+id);
-	buff.write("Sexe: "+sexe);
-	buff.write("Poids: "+poids);
-	buff.write("Statut: "+statut);
-	buff.write("Progression: "+progression);
-	buff.write("Etat: "+etat);
-	buff.write("Jour de la meilleure performance: "+meilleure_performance);
-	buff.newLine();
-    }
+	try{
+	    BufferedWriter buff = new BufferedWriter(new FileWriter(filename, true));
+	    buff.write("Id:"+ id + " ");
+	    buff.write("Espece:"+ espece + " ");
+	    buff.write("Sexe:"+ sexe + " ");
+	    buff.write("Poids:"+ poids + " ");
+	    buff.write("Statut:"+ statut + " ");
+	    buff.write("Progression:"+ progression + " ");
+	    buff.write("Etat:"+ etat + " ");
+	    buff.write("Jour_de_la_meilleure_performance:"+ meilleure_performance + " ");
+	    buff.write("Resultat:" + resultat + " ");
+	    buff.write("Meilleur_resultat:" + meilleur_resultat  + " ");
+	    buff.write("Poids_debut_semaine:"+ poids_debut_semaine +" ");
+	    buff.newLine();
+	    buff.close();
+	}
+	catch(IOException e) {System.out.println("Erreur de sauvegarde: "+ e);}
 	
+    }
+
+    public void resetIDs(){nb_animaux = 0;}
 }

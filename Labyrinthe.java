@@ -14,9 +14,19 @@ public class Labyrinthe extends Test {
     public void saisie_utilisateur()
 	{
 	    System.out.println("Temps ?");
-		int t=Gestion.saisie_num();
-		temps=t;
+	    boolean x = true;
+	    int t;
+	    while(x){
+		t=Gestion.saisie_num();
+		if(t > 0){ 
+		    temps=t;
+		    x = false;
+		} else {
+		    System.out.println("Time must be over 0... your mouse can't teleport, nor can it reach the end before the test begins (unless you're VERY bad at what you're doing) !");
+		}
+	    }
 	}
+	    
 	
 
 }

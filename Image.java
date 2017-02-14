@@ -12,16 +12,29 @@ public class Image extends Test {
     public boolean getReussite() {return reussite;}
     public String getPopVisee(){return pop_visee;}
 	
-	public void saisie_utilisateur()
+    public void saisie_utilisateur() // repete 5x l'experience
 	{
-	    System.out.println("Nombre d'echecs ? ");
-		int nb=Gestion.saisie_num();
-		nb_echecs=nb;
-		if (nb > nb_max)
-		    reussite=true;
-		else
-		    reussite=false;
+          for (int i=0;i<5;i++) 
+                {
+		    boolean x = true;
+		    System.out.println("Nombre d'echecs ? (exp:"+(i+1)+")");
+		    int nb = -1;
+		    while (x){
+			nb = Gestion.saisie_num();
+			if(nb >= 0){ // saisie correctement, sinon recommence le saisie.
+			    x = false; //
+			}
+			else {
+			    System.out.println("Erreur, veuillez retaper le nombre d'echecs.");
+			}
+		    }
+                    nb_echecs+=nb;
+                }
+	    nb_echecs=nb_echecs/5;
+             if (nb_echecs > nb_max)
+                reussite=true;
+             else
+                reussite=false;
+
 	}
-
-
 }

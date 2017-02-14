@@ -1,0 +1,2 @@
+Id:1 Espece:singe Sexe:M Poids:20.0 Statut:vivant Progression:0 Etat:normal Jour_de_la_meilleure_performance:\ Resultat:3 Meilleur_resultat:10000000 Poids_debut_semaine:20.0 
+Id:2 Espece:souris groupe:2 Sexe:F Poids:1.0 Statut:vivant Progression:0 Etat:normal Jour_de_la_meilleure_performance:\ Resultat:4 Meilleur_resultat:10000000 Poids_debut_semaine:1.0 
