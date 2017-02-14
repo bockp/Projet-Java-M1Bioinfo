@@ -185,8 +185,14 @@ public class Gestion
 		if(choix.equals("Y")){
 		    System.out.println("Donnees chargees\n");
 		    jour += 1;
+		    try{
 		    loadAnimalData(animaux,nomJour,true);
 		    loaded = true;
+		    }
+		    catch(ClassCastException ex){
+			System.out.println("Erreur, il y a une incoherence dans vos donnees, vous allez devoir saisir les donnees manuellement");
+			erase(nomJour+".txt");
+		    }
 				      
 		}
 		else
@@ -625,7 +631,7 @@ public class Gestion
     }
 
     // fonction de chargement des données d'une journée
-    public static void loadAnimalData(ArrayList animaux, String nom, boolean replace)
+    public static void loadAnimalData(ArrayList animaux, String nom, boolean replace) throws ClassCastException
     {
 
 	try {
@@ -775,6 +781,7 @@ public class Gestion
 	}
 	catch(FileNotFoundException e){System.out.println("Erreur, le fichier existe-t-il vraiment ?");}
 	catch(IOException e){System.out.println("Erreur: "+ e);}
+       
 
     }
 }
