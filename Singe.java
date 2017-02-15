@@ -1,6 +1,7 @@
 /**
  *Cette classe represente un singe
  * @see Animal
+ * @author Peter Bock, Cecilia Ostertag
  */
 
 
