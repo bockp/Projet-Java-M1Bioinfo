@@ -7,6 +7,7 @@ import java.util.regex.*;
  * @see Animal
  * @see Test
  * @see Protocole
+ * @author Peter Bock, Cecilia Ostertag
  */
 public class Gestion
 {
