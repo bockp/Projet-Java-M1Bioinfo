@@ -1,8 +1,25 @@
 import java.io.*;
+
+/**
+ *Cette classe represente une souris
+ * @see Animal
+ */
 public class Souris extends Animal
 {
+    /**
+     *groupe auquel appartient la souris
+     * @see Souris#Souris(String, float, int)
+     * @see Souris#setGroup(int)
+     */
     private int groupe;
-    
+
+    /**
+     *Constructeur de la classe Souris.
+     * @param sexe : sexe de la souris
+     * @param poids : poids de la souris
+     * @param groupe : groupe de la souris
+     * @see Animal#Animal(String, float)
+     */
     public Souris(String sexe, float poids, int groupe)
     {
 	super(sexe, poids);
@@ -14,6 +31,10 @@ public class Souris extends Animal
 	    this.pop="Souris 2";
     }
 
+    /**
+     *Assigne un groupe a la souris, dans le cas ou on charge un fichier de donnes.
+     * @param groupe : groupe de la souris
+     */
     public void setGroup(int groupe){
 	this.groupe = groupe;
 	if (groupe == 1)
@@ -22,13 +43,22 @@ public class Souris extends Animal
 	    this.pop="Souris 2";
 	
     }
-
+    
+    /**
+     *Affiche les informations de la souris.
+     * @see Animal#afficher_infos()
+     */
     public void afficher_infos()
     {
     	super.afficher_infos();
 	System.out.println("Groupe: "+groupe);
     }
 
+    /**
+     *Sauvegarde les informations de la souris dans un ficher texte
+     * @param filename : le nom du fichier txt
+     * @see Animal#sauvegarder(String)
+     */
     public void sauvegarder(String filename)
     {
 	try{

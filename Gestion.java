@@ -2,9 +2,18 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
-//vider les fichiers avant execution du programme, recuperer donnees, afficher meilleur apprentissage (tous, et singe/souris), afficher si perfs associees au stress
+/**
+ * Cette classe conitent le main(), elle permet la gestion de l'etude.
+ * @see Animal
+ * @see Test
+ * @see Protocole
+ */
 public class Gestion
 {
+    /**
+     * Saisie d'un entier
+     * @return num : un entier (int)
+     **/
 
     public static int saisie_num() //
     {	
@@ -18,6 +27,10 @@ public class Gestion
 	catch(NumberFormatException a) {return -1;}
     }
 
+    /**
+     * Saisie d'un flotant
+     * @return f : un flotant (float)
+     **/
     public static float saisie_float() //
     {	
 	try{
@@ -31,9 +44,9 @@ public class Gestion
     }
     
     /**
-	   Saisie d'une chaine de caracteres
-	**/
-
+     * Saisie d'une chaine de characteres
+     * @return chaine : une chaine de characteres (String)
+     **/
     public static String saisie_chaine() //
     {
 	
@@ -48,6 +61,10 @@ public class Gestion
 	}
     }
 
+    /**
+     * Programme principal
+     * @param argv : ...
+     **/
     public static void main(String[] argv)
     {
 	Protocole protocole = new Protocole(); //possibilit de creeer plusieurs protocoles, si on rajoute des parametres dans le constructeur
@@ -155,6 +172,13 @@ public class Gestion
             }
     }
 
+    /**
+     * Saisie des resultats jour apres jour
+     * @param animaux : liste des animaux de l'etude
+     * @param tests_dispos : tests disponibles par espece (cles : especes , valeurs : tests)
+     * @param semaine : liste des jours de la semaine
+     * @param jour : numero du jours (commence a 0 pour lundi)
+     **/
     public static void saisie_resultats_semaine(ArrayList animaux, Hashtable tests_dispos, List<String> semaine, int jour)
     {
 	
@@ -210,7 +234,15 @@ public class Gestion
 	    }
 	System.out.println("Fin de la semaine");
     }
-    
+
+    /**
+     * Saisie des resultats du jour
+     * @param animaux : liste des animaux de l'etude
+     * @param ht : tests disponibles par espece (cles : especes , valeurs : tests)
+     * @param semaine : liste des jours de la semaine
+     * @param jour : numero du jours (commence a 0 pour lundi)
+     * @return le numero du jours suivant
+     **/
     public static int saisie_resultats(ArrayList animaux, Hashtable ht, List<String> semaine, int jour)
     {
 	for (int i=0;i<animaux.size();i++)
@@ -315,7 +347,13 @@ public class Gestion
 	jour++;
 	return jour;
     }
-    
+
+    /**
+     * Recuperation des tests disponibles pour un animal en fonction de son espece
+     * @param animal : un animal de l'etude
+     * @param ht : tests disponibles par espece (cles : especes , valeurs : tests)
+     * @return liste des tests disponibles pour l'animal
+     **/
     public static ArrayList<String> trouver_tests(Animal animal, Hashtable ht)
     {
 	Enumeration pops = ht.keys();
@@ -329,7 +367,12 @@ public class Gestion
 	return tests;
     }
 		
-
+    /**
+     * Saisie des animaux de l'etude
+     * @param animaux : liste des animaux de l'etude
+     * @param especes : liste des especes disponibles
+     * @param semaine : liste des jours de la semaine
+     **/
     public static void saisie_animaux(ArrayList animaux, ArrayList especes, List<String> semaine)
     {
 	for(Iterator<String> e = semaine.iterator();e.hasNext();)
@@ -347,6 +390,11 @@ public class Gestion
 		
     }
 
+    /**
+     * Saisie des animaux de l'etude, par espece
+     * @param animaux : liste des animaux de l'etude
+     * @param espece : espece courante (de la liste d'especes)
+     **/
     public static void saisie_animaux_type(ArrayList animaux, String espece)
     {
 	boolean x = true;
@@ -429,6 +477,11 @@ public class Gestion
 	    }
     }
 
+    /**
+     * Affichage des animaux de l'etude
+     * @param animaux : liste des animaux de l'etude
+     * @param semaine : liste des jours de la semaine
+     **/
     public static void afficher_animaux(ArrayList animaux, List<String> semaine)
     {
 
@@ -444,6 +497,10 @@ public class Gestion
             }
     }
 
+    /**
+     * Affichage de la progression des animaux
+     * @param animaux : liste des animaux de l'etude
+     **/
     public static void afficher_apprentissage(ArrayList animaux)
     {
         for (int i=0;i<animaux.size();i++)
@@ -455,6 +512,10 @@ public class Gestion
             }
     }
 
+    /**
+     * Affichage du jour de meilleure performance de chaque animal
+     * @param animaux : liste des animaux de l'etude
+     **/
     public static void afficher_meilleure_performance(ArrayList animaux)
     {
         for (int i=0;i<animaux.size();i++)
@@ -466,6 +527,10 @@ public class Gestion
             }
     }
 
+    /**
+     * Affichage des animaux ayant la meilleure progression, par espece
+     * @param animaux : liste des animaux de l'etude
+     **/
     public static void animaux_meilleures_performances(ArrayList animaux)
     {
 	ArrayList meilleurs_animaux = new ArrayList(); //souris, singes, etc
@@ -519,6 +584,10 @@ public class Gestion
 	}
     }
 
+    /**
+     * Affichage de l'espece ayant la meilleure progression
+     * @param animaux : liste des animaux de l'etude
+     **/
     public static void meilleure_espece(ArrayList animaux)
     {
 	ArrayList<Integer> totaux = new ArrayList<Integer>(); //souris, singes, etc
@@ -564,6 +633,10 @@ public class Gestion
 	
     }
 
+    /**
+     * Affichage du lien entre la progression et l'etat de stress des animaux
+     * @param animaux : liste des animaux de l'etude
+     **/
     public static void stress(ArrayList animaux)
     {
 	ArrayList<Integer> totaux = new ArrayList<Integer>(); //normaux, stresses
@@ -613,15 +686,22 @@ public class Gestion
 	    System.out.println("Tous vos animaux sont dans le meme etat");
 	}
     }
-    
+
+    /**
+     * Menu du programme.
+     * @return choix : choix de l'utilisateur
+     **/
     public static int menu()
     {
          System.out.println("**MENU**\n\nSaisir les animaux: 1\nSaisir les donnees: 2\nAfficher la liste d'animaux: 3\nAfficher l'apprentissage des animaux: 4\nAfficher le jour de la meilleure performance des animaux: 5\nAfficher les animaux qui ont la meilleure progression: 6\nAfficher la meilleure espece: 7\nAfficher conclusion de l'etude: 8\nCharger une liste d'animaux: 9\n Quitter: 0\n");
         int choix = saisie_num();
         return choix;
     }
-    
-    // function of the Apocalypse.
+
+    /**
+     * Efface le contenu d'un fichier texte
+     * @param file : nom du fichier txt
+     **/
     public static void erase(String file){
 	try{
 	    PrintWriter writer = new PrintWriter(file); // Opens the file to Write, which deletes it's content.
@@ -630,7 +710,12 @@ public class Gestion
 	catch(FileNotFoundException e) {;} 
     }
 
-    // fonction de chargement des données d'une journée
+    /**
+     * Chargement des donnes d'une journee a partir d'un fichier texte
+     * @param animaux : liste des animaux de l'etude
+     * @param nom : nom du fichier txt
+     * @param replace : true si l'utilisateur a deja saisi une liste d'animaux et veur uniquement charger les donnees, false si l'utilisateur veut charger une liste d'animaux initiale 
+     **/
     public static void loadAnimalData(ArrayList animaux, String nom, boolean replace) throws ClassCastException
     {
 
