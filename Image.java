@@ -1,7 +1,18 @@
 /**
  * La classe Image represente un des tests disponibles.
+ * 
  * elle ne s'applique que aux singes, et est une extension de la classe Test.
  * @see Test
+ *
+ * PRINCIPE :
+ *
+ * on présente aux singes un écran avec une image puis on la fait disparaitre.
+ * Aprés 1 minute, on rallume l’écran avec 10 images dont celle affichée au premier écran.
+ * On demande alors au singe de retrouver cette image. 
+ * On compte combien d’images il a choisi avant de retrouver la bonne. 
+ * Aprés 8 échecs on considère que l’exercice est raté. 
+ * Une récompense sous forme de friandise lui est donnée si il réussi. 
+ * Cette exercice est répété 5 fois dans l’heure, le jeu d’images est toujours le même.
  *
  * @author Peter Bock, Cecilia Ostertag
  */
