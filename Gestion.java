@@ -593,7 +593,7 @@ public class Gestion
 	nbs.add(0);
 	int val;
 	int nb;
-	for (int i=0;i<animaux.size();i++)
+	for (int i=0;i<totaux.size();i++)
             {
                 Animal animal = (Animal)animaux.get(i);
 		int perf = animal.getProgression();
