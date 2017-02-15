@@ -113,7 +113,7 @@ public class Gestion
                     case 3 :
                         {
                             if (! animaux.isEmpty())
-                                afficher_animaux(animaux, semaine);
+                                afficher_animaux(animaux);
                             else
                                 System.out.println("Erreur, vous devez d'abord saisir des animaux.\n");
                             break;
@@ -483,14 +483,8 @@ public class Gestion
      * @param animaux : liste des animaux de l'etude
      * @param semaine : liste des jours de la semaine
      **/
-    public static void afficher_animaux(ArrayList animaux, List<String> semaine)
+    public static void afficher_animaux(ArrayList animaux)
     {
-
-	 for(Iterator<String> e = semaine.iterator();e.hasNext();)
-	    {
-		String nomJour = e.next();
-		
-	    } // ??
 	for (int i=0;i<animaux.size();i++)
             {
                 Animal animal = (Animal)animaux.get(i);
