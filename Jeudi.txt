@@ -1,0 +1,3 @@
+Id:1 Espece:singe Sexe:M Poids:12.0 Statut:vivant Progression:400 Etat:fatigue Jour_de_la_meilleure_performance:Mardi Resultat:5 Meilleur_resultat:1 Poids_debut_semaine:10.0 
+Id:2 Espece:souris groupe:1 Sexe:M Poids:12.0 Statut:vivant Progression:5000 Etat:fatigue Jour_de_la_meilleure_performance:Mercredi Resultat:51 Meilleur_resultat:1 Poids_debut_semaine:11.0 
+Id:3 Espece:souris groupe:2 Sexe:F Poids:12.0 Statut:vivant Progression:0 Etat:fatigue Jour_de_la_meilleure_performance:Mercredi Resultat:1 Meilleur_resultat:1 Poids_debut_semaine:11.0 
