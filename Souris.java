@@ -3,6 +3,7 @@ import java.io.*;
 /**
  *Cette classe represente une souris
  * @see Animal
+ * @author Peter Bock, Cecilia Ostertag
  */
 public class Souris extends Animal
 {
